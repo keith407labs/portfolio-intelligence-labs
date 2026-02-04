@@ -1,28 +1,29 @@
-Index prescriptive · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Intelligence Labs | Chapter 13 Due Diligence for Debt Buyers</title>
+    <title>Portfolio Intelligence Labs | Institutional Grade</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-dark: #0B0E14;
-            --brand-blue: #4F6EF7;
-            --brand-blue-soft: #EEF2FF;
-            --text-main: #1A1D23;
-            --text-muted: #64748B;
-            --white: #FFFFFF;
-            --border: #E2E8F0;
+            --bg-deep: #030712;
+            --bg-surface: #0f172a;
+            --bg-surface-highlight: #1e293b;
+            --border: #334155;
+            --border-light: #475569;
+            
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --text-dim: #64748B;
+            
+            --brand-blue: #3B82F6;
+            --brand-glow: #60A5FA;
             --check-green: #10B981;
             --amber: #F59E0B;
             --red: #EF4444;
-            --purple: #8B5CF6;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,59 +32,57 @@ Copy
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--text-main);
             line-height: 1.6;
-            background-color: #F8FAFC;
+            background-color: var(--bg-deep);
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* --- NEON CHROME BACKGROUND --- */
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* --- DARK NEON CHROME BACKGROUND --- */
         .neon-bg-container {
             position: fixed;
             inset: 0;
             z-index: -1;
             overflow: hidden;
             pointer-events: none;
-            background: linear-gradient(to bottom, #f8fafc, rgba(219, 234, 254, 0.5), #ffffff);
+            background: var(--bg-deep);
+        }
+
+        /* Subtle Grid Overlay */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
         }
 
         .neon-glow-1 {
             position: absolute;
-            left: 50%;
-            top: 40%;
-            height: 40rem;
-            width: 80rem;
+            left: 20%;
+            top: 20%;
+            height: 50rem;
+            width: 50rem;
             transform: translate(-50%, -50%);
             border-radius: 100%;
-            filter: blur(80px);
-            opacity: 0.8;
-            background: radial-gradient(circle at 50% 50%, rgba(59,130,246,.15), rgba(34,211,238,.10), rgba(217,70,239,.05), transparent 60%);
+            filter: blur(120px);
+            opacity: 0.15;
+            background: radial-gradient(circle, #3B82F6, transparent 70%);
         }
 
         .neon-glow-2 {
             position: absolute;
-            left: 50%;
+            right: 10%;
             top: 60%;
-            height: 30rem;
-            width: 50rem;
+            height: 40rem;
+            width: 40rem;
             transform: translate(-50%, -50%);
             border-radius: 100%;
-            filter: blur(80px);
-            opacity: 0.6;
-            background: conic-gradient(from 180deg at 50% 50%, rgba(34,211,238,.15), rgba(99,102,241,.10), rgba(34,211,238,.15));
-            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        .noise-overlay {
-            position: absolute;
-            inset: 0;
-            opacity: 0.03;
-            mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 0.3; }
+            filter: blur(100px);
+            opacity: 0.12;
+            background: radial-gradient(circle, #8B5CF6, transparent 70%);
         }
 
         /* --- LAYOUT --- */
@@ -92,489 +91,255 @@ Copy
         nav {
             position: fixed;
             top: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(3, 7, 18, 0.8);
             backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 1.25rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
         .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; text-transform: uppercase; }
+        .logo { font-weight: 700; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-main); }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.9rem; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 0.9rem; transition: 0.2s; }
+        .nav-links a:hover { color: var(--text-main); }
 
         .btn-outline {
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            border: 1.5px solid var(--brand-blue);
-            color: var(--brand-blue) !important;
+            padding: 0.6rem 1.4rem;
+            border-radius: 4px; /* Sharper corners for institutional feel */
+            border: 1px solid var(--border-light);
+            color: var(--text-main) !important;
             transition: 0.3s ease;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.02);
         }
 
-        .btn-outline:hover { background: var(--brand-blue); color: white !important; }
+        .btn-outline:hover { border-color: var(--brand-blue); background: rgba(59, 130, 246, 0.1); }
 
-        /* --- SECTIONS --- */
-        .hero { padding: 12rem 0 6rem; text-align: center; }
+        /* --- HERO --- */
+        .hero { padding: 14rem 0 8rem; text-align: center; }
         .hero h1 {
-            font-size: 4.8rem;
-            font-weight: 800;
-            letter-spacing: -3px;
-            color: var(--brand-dark);
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: var(--text-main);
             margin-bottom: 1.5rem;
-            line-height: 1.05;
+            line-height: 1.1;
+            background: linear-gradient(to bottom right, #FFFFFF, #94A3B8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .hero h1 span { color: var(--brand-blue); }
+        .hero h1 span { 
+            background: linear-gradient(to right, #60A5FA, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .hero p {
             font-size: 1.25rem;
             color: var(--text-muted);
-            max-width: 850px;
+            max-width: 750px;
             margin: 0 auto 3rem;
-            font-weight: 400;
+            font-weight: 300;
         }
 
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 3rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 1rem; }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 1rem; color: var(--text-main); }
         .subtitle { color: var(--text-muted); font-size: 1.1rem; }
 
-        /* --- PRIORITY BURN WATERFALL --- */
-        .waterfall-section {
-            padding: 6rem 0;
-            margin-bottom: 4rem;
-        }
-
-        .waterfall-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 32px;
-            padding: 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .waterfall-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.3;
-        }
-
-        .waterfall-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .waterfall-header h3 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-        }
-
-        .waterfall-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .waterfall-flow {
-            display: grid;
-            gap: 1rem;
-            position: relative;
-        }
-
-        .waterfall-tier {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 1.5rem 2rem;
-            display: grid;
-            grid-template-columns: 80px 1fr 120px;
-            align-items: center;
-            gap: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .waterfall-tier:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateX(8px);
-        }
-
-        .tier-number {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            color: #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-
-        .tier-content h4 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .tier-content p {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            margin: 0;
-        }
-
-        .tier-priority {
-            text-align: right;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            opacity: 0.9;
-        }
-
-        .tier-arrow {
-            text-align: center;
-            font-size: 2rem;
-            opacity: 0.5;
-            margin: -0.5rem 0;
-        }
-
-        /* --- PRESCRIPTIVE CLAIM ANALYSIS CARDS --- */
-        .claim-analysis-section {
-            padding: 6rem 0;
-            margin-bottom: 4rem;
-        }
-
+        /* --- PREMIUM CARDS (THE FIX) --- */
         .claim-cards-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            margin-top: 3rem;
         }
 
         .claim-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 24px;
-            padding: 0;
-            transition: all 0.3s ease;
-            position: relative;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
-        }
-
-        .claim-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
-
-        .claim-card.blue-chip::before {
-            background: linear-gradient(90deg, var(--check-green), #059669);
-        }
-
-        .claim-card.lumpy::before {
-            background: linear-gradient(90deg, var(--amber), #D97706);
-        }
-
-        .claim-card.steady::before {
-            background: linear-gradient(90deg, var(--brand-blue), #667eea);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .claim-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            border-color: var(--brand-blue);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
         }
 
-        .claim-card-header {
-            padding: 2rem 2rem 1.5rem;
+        /* Top Status Bar */
+        .card-status-bar {
+            padding: 1rem 1.5rem;
             border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
         }
 
-        .profile-badge {
-            display: inline-block;
-            padding: 0.4rem 0.9rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1rem;
-        }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 10px currentColor; }
+        .status-text { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace;}
+        
+        .blue-chip .status-dot { background: var(--check-green); color: var(--check-green); }
+        .blue-chip .status-text { color: var(--check-green); }
+        
+        .lumpy .status-dot { background: var(--amber); color: var(--amber); }
+        .lumpy .status-text { color: var(--amber); }
+        
+        .steady .status-dot { background: var(--brand-blue); color: var(--brand-blue); }
+        .steady .status-text { color: var(--brand-blue); }
 
-        .profile-badge.blue-chip {
-            background: #D1FAE5;
-            color: #065F46;
-        }
+        .card-id { font-size: 0.8rem; color: var(--text-dim); }
 
-        .profile-badge.lumpy {
-            background: #FEF3C7;
-            color: #92400E;
-        }
+        /* Main Content */
+        .card-content { padding: 1.5rem; flex-grow: 1; }
 
-        .profile-badge.steady {
-            background: #DBEAFE;
-            color: #1E40AF;
-        }
-
-        .claim-card-id {
+        .creditor-name {
             font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--brand-dark);
-            font-family: 'Courier New', monospace;
-            margin-bottom: 0.5rem;
-        }
-
-        .claim-card-creditor {
-            font-size: 0.85rem;
-            color: var(--text-muted);
             font-weight: 600;
-        }
-
-        .claim-card-body {
-            padding: 1.5rem 2rem;
-        }
-
-        .composite-score {
-            text-align: center;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, var(--brand-blue-soft), rgba(239, 246, 255, 0.3));
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        .composite-score-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .composite-score-value {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--brand-blue);
-            line-height: 1;
-        }
-
-        .score-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .score-item {
-            text-align: center;
-        }
-
-        .score-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .score-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .score-value.excellent { color: var(--check-green); }
-        .score-value.good { color: var(--brand-blue); }
-        .score-value.moderate { color: var(--amber); }
-        .score-value.poor { color: var(--red); }
-
-        .payment-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: #F8FAFC;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--brand-dark);
-        }
-
-        .valuation-section {
-            border-top: 1px solid var(--border);
-            padding: 1.5rem 2rem;
-        }
-
-        .valuation-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .valuation-item {
-            text-align: center;
-        }
-
-        .valuation-label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .valuation-value {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--brand-blue);
-        }
-
-        .outlook-text {
-            font-size: 0.85rem;
-            line-height: 1.6;
             color: var(--text-main);
+            margin-bottom: 1.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Score Dashboard */
+        .score-dashboard {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
             padding: 1rem;
-            background: var(--brand-blue-soft);
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            border-left: 3px solid var(--brand-blue);
         }
 
-        /* --- PRICING CARDS --- */
-        .pricing-cards {
+        .main-score { text-align: center; }
+        .score-ring { 
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            line-height: 1; 
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -2px;
+        }
+        .score-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; letter-spacing: 0.5px; }
+
+        .mini-scores { display: flex; gap: 0.8rem; }
+        .mini-score-item { text-align: center; }
+        .mini-val { font-size: 0.9rem; font-weight: 700; font-family: 'JetBrains Mono'; margin-bottom: 2px;}
+        .mini-lbl { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase;}
+
+        /* Data Grid */
+        .data-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 8rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border); /* Creates the border lines */
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
         }
 
+        .data-cell {
+            background: var(--bg-surface);
+            padding: 0.8rem 1rem;
+        }
+
+        .data-cell span { display: block; }
+        .dc-label { font-size: 0.65rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+        .dc-value { font-size: 0.9rem; font-weight: 600; color: var(--text-main); font-family: 'JetBrains Mono'; }
+
+        /* Outlook Section */
+        .outlook-box {
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 2px solid var(--brand-blue);
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .outlook-box strong { color: var(--brand-blue); display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- PRICING & MATRIX --- */
+        .pricing-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 6rem; }
+        
         .pricing-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 3rem;
-            transition: all 0.3s ease;
             position: relative;
         }
 
-        .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .pricing-card.featured { border-color: var(--brand-blue); border-width: 3px; }
-
-        .badge {
-            position: absolute;
-            top: -12px;
-            right: 2rem;
-            background: var(--brand-blue);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .pricing-card.featured {
+            background: linear-gradient(to bottom, var(--bg-surface), #151e32);
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
         }
 
-        .price {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--brand-dark);
-            margin-bottom: 1.5rem;
+        .price { font-size: 3rem; font-weight: 700; color: var(--text-main); font-family: 'JetBrains Mono'; letter-spacing: -2px;}
+        .price span { font-size: 1rem; color: var(--text-muted); letter-spacing: 0; }
+        
+        .price-list li {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .price span { font-size: 1.5rem; color: var(--text-muted); font-weight: 600; }
+        .price-list li strong { color: var(--text-main); }
 
         .btn-card {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            text-align: center;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: 0.3s ease;
-            border: 2px solid var(--brand-dark);
+            display: block; width: 100%; padding: 1rem; text-align: center; border-radius: 4px;
+            text-decoration: none; font-weight: 600; margin-top: 2rem;
+            font-size: 0.9rem; transition: 0.3s;
         }
+        
+        .btn-card.primary { background: var(--brand-blue); color: white; }
+        .btn-card.primary:hover { background: #2563EB; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+        
+        .btn-card.secondary { background: transparent; border: 1px solid var(--border-light); color: var(--text-main); }
+        .btn-card.secondary:hover { border-color: var(--text-main); }
 
-        .btn-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-
-        /* --- COMPARISON TABLE --- */
+        /* Table */
         .comparison-container {
-            background: white;
-            border-radius: 24px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid var(--border);
-            margin-bottom: 4rem;
+            background: var(--bg-surface);
         }
-
+        
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 1.25rem 2rem; text-align: left; }
-        th { background: var(--brand-dark); color: white; font-weight: 700; font-size: 0.9rem; }
-        tbody tr { border-bottom: 1px solid var(--border); }
-        tbody tr:last-child { border-bottom: none; }
-        tbody tr:hover { background: var(--brand-blue-soft); }
+        th { background: var(--bg-deep); color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; padding: 1.5rem; text-align: left; }
+        td { padding: 1.25rem 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+        
+        .category-row { background: rgba(255,255,255,0.03); }
+        .category-row td { color: var(--text-main); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--brand-glow); }
 
-        .category-row {
-            background: linear-gradient(90deg, var(--brand-blue-soft), rgba(239, 246, 255, 0.3)) !important;
-        }
-        .category-row td {
-            font-weight: 800;
-            color: var(--brand-blue);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            padding: 1rem 2rem;
-        }
-
-        .check { color: var(--check-green); font-weight: bold; font-size: 1.1rem; }
-        .cross { color: #CBD5E1; font-weight: bold; }
+        .check { color: var(--check-green); }
+        .cross { color: var(--border-light); opacity: 0.5; }
 
         @media (max-width: 900px) {
-            .hero h1 { font-size: 3.2rem; }
-            .pricing-cards { grid-template-columns: 1fr; }
-            .claim-cards-grid { grid-template-columns: 1fr; }
-            .waterfall-container { padding: 2rem; }
-            .waterfall-tier { grid-template-columns: 1fr; text-align: center; gap: 1rem; }
-            .tier-priority { text-align: center; }
+            .hero h1 { font-size: 3rem; }
+            .pricing-cards, .claim-cards-grid { grid-template-columns: 1fr; }
         }
     </style>
-    
 </head>
 <body>
 
     <div class="neon-bg-container">
+        <div class="grid-overlay"></div>
         <div class="neon-glow-1"></div>
         <div class="neon-glow-2"></div>
-        <div class="noise-overlay"></div>
     </div>
 
     <nav>
@@ -582,227 +347,207 @@ Copy
             <div class="logo">Portfolio Intelligence Labs</div>
             <div class="nav-links">
                 <a href="#pricing">Pricing</a>
-                <a href="#examples">Examples</a>
+                <a href="#examples">Intelligence</a>
                 <a href="#comparison">Data Matrix</a>
-                <a href="#" class="btn-outline">Contact</a>
+                <a href="#" class="btn-outline">Client Login</a>
             </div>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
-            <h1>Underwrite Chapter 13 portfolios<br>with <span>payment data.</span></h1>
-            <p>Institutional-grade intelligence for debt buyers. See real-time plan payments, identify non-performing accounts, and validate recovery projections before you bid.</p>
-            <a href="#pricing" class="btn-outline" style="background: var(--brand-blue); color: white !important; border: none; padding: 1.2rem 2.5rem; font-size: 1.1rem;">Request Portfolio Audit</a>
+            <h1>Underwrite Chapter 13<br>with <span>precision.</span></h1>
+            <p>Institutional-grade intelligence for debt buyers. Access real-time plan payments, identify non-performing accounts, and validate recovery projections.</p>
+            <a href="#pricing" class="btn-outline" style="background: var(--brand-blue); color: white !important; border: none; padding: 1rem 2rem; font-size: 1rem;">Start Portfolio Audit</a>
         </div>
     </section>
 
-    <!-- PRESCRIPTIVE CLAIM ANALYSIS -->
     <section class="claim-analysis-section" id="examples">
         <div class="container">
             <div class="section-header">
-                <h2>Prescriptive Claim Intelligence</h2>
-                <p class="subtitle">Real examples scored on payment volatility, velocity, and predictability with valuation guidance</p>
+                <h2>Prescriptive Claim Analysis</h2>
+                <p class="subtitle">Quantitative scoring of payment volatility and velocity.</p>
             </div>
             
             <div class="claim-cards-grid">
-                <!-- Card 1: High-Velocity Blue Chip -->
+                
                 <div class="claim-card blue-chip">
-                    <div class="claim-card-header">
-                        <span class="profile-badge blue-chip">High-Velocity Blue Chip</span>
-                        <div class="claim-card-id">ATLN2-2211365-11</div>
-                        <div class="claim-card-creditor">Fast Money Loans • Atlanta District</div>
+                    <div class="card-status-bar">
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Blue Chip</span>
+                        </div>
+                        <div class="card-id mono">ID: ATLN2-2211</div>
                     </div>
                     
-                    <div class="claim-card-body">
-                        <div class="composite-score">
-                            <div class="composite-score-label">Overall Score</div>
-                            <div class="composite-score-value">86</div>
-                        </div>
+                    <div class="card-content">
+                        <div class="creditor-name">Fast Money Loans • Atlanta</div>
                         
-                        <div class="score-grid">
-                            <div class="score-item">
-                                <div class="score-label">Volatility</div>
-                                <div class="score-value excellent">92</div>
+                        <div class="score-dashboard">
+                            <div class="main-score">
+                                <div class="score-ring" style="color: var(--check-green)">86</div>
+                                <div class="score-label">Composite</div>
                             </div>
-                            <div class="score-item">
-                                <div class="score-label">Velocity</div>
-                                <div class="score-value excellent">85</div>
-                            </div>
-                            <div class="score-item">
-                                <div class="score-label">Predictable</div>
-                                <div class="score-value excellent">95</div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">Total Paid</div>
-                                <div class="stat-value">$1,755</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Payments</div>
-                                <div class="stat-value">16</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">6mo Average</div>
-                                <div class="stat-value">$108/mo</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Trend</div>
-                                <div class="stat-value">Stable</div>
+                            <div class="mini-scores">
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--text-main)">92</div>
+                                    <div class="mini-lbl">Vol</div>
+                                </div>
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--text-main)">85</div>
+                                    <div class="mini-lbl">Vel</div>
+                                </div>
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--check-green)">95</div>
+                                    <div class="mini-lbl">Pred</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="valuation-section">
-                        <div class="valuation-grid">
-                            <div class="valuation-item">
-                                <div class="valuation-label">Suggested IRR</div>
-                                <div class="valuation-value">10%</div>
+
+                        <div class="data-grid">
+                            <div class="data-cell">
+                                <span class="dc-label">Total Paid</span>
+                                <span class="dc-value">$1,755</span>
                             </div>
-                            <div class="valuation-item">
-                                <div class="valuation-label">Confidence</div>
-                                <div class="valuation-value">High</div>
+                            <div class="data-cell">
+                                <span class="dc-label">Count</span>
+                                <span class="dc-value">16</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="dc-label">6mo Avg</span>
+                                <span class="dc-value">$108</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="dc-label">Implied IRR</span>
+                                <span class="dc-value">10.5%</span>
                             </div>
                         </div>
-                        <div class="outlook-text">
-                            <strong>2026 Outlook:</strong> Stabilized asset with consistent monthly performance. Priority burn clearly satisfied. 100% of projected unsecured percentage likely to recover with zero delay phase. Payments arrive like clockwork around the 1st-2nd of each month.
+
+                        <div class="outlook-box">
+                            <strong>Analyst Note</strong>
+                            Stabilized asset. Priority burn satisfied. 100% recovery likely with zero delay phase.
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 2: Lumpy Recovery -->
                 <div class="claim-card lumpy">
-                    <div class="claim-card-header">
-                        <span class="profile-badge lumpy">Lumpy Recovery</span>
-                        <div class="claim-card-id">ALBQ-2310075-23</div>
-                        <div class="claim-card-creditor">Stretch Money • Albuquerque District</div>
+                    <div class="card-status-bar">
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Lumpy Recovery</span>
+                        </div>
+                        <div class="card-id mono">ID: ALBQ-2310</div>
                     </div>
                     
-                    <div class="claim-card-body">
-                        <div class="composite-score">
-                            <div class="composite-score-label">Overall Score</div>
-                            <div class="composite-score-value">64</div>
-                        </div>
+                    <div class="card-content">
+                        <div class="creditor-name">Stretch Money • Albuquerque</div>
                         
-                        <div class="score-grid">
-                            <div class="score-item">
-                                <div class="score-label">Volatility</div>
-                                <div class="score-value moderate">48</div>
+                        <div class="score-dashboard">
+                            <div class="main-score">
+                                <div class="score-ring" style="color: var(--amber)">64</div>
+                                <div class="score-label">Composite</div>
                             </div>
-                            <div class="score-item">
-                                <div class="score-label">Velocity</div>
-                                <div class="score-value good">70</div>
-                            </div>
-                            <div class="score-item">
-                                <div class="score-label">Predictable</div>
-                                <div class="score-value good">78</div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">Total Paid</div>
-                                <div class="stat-value">$2,251</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Payments</div>
-                                <div class="stat-value">25</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Median</div>
-                                <div class="stat-value">$88/mo</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Range</div>
-                                <div class="stat-value">$17-$238</div>
+                            <div class="mini-scores">
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--red)">48</div>
+                                    <div class="mini-lbl">Vol</div>
+                                </div>
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--text-main)">70</div>
+                                    <div class="mini-lbl">Vel</div>
+                                </div>
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--amber)">78</div>
+                                    <div class="mini-lbl">Pred</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="valuation-section">
-                        <div class="valuation-grid">
-                            <div class="valuation-item">
-                                <div class="valuation-label">Suggested IRR</div>
-                                <div class="valuation-value">15%</div>
+
+                        <div class="data-grid">
+                            <div class="data-cell">
+                                <span class="dc-label">Total Paid</span>
+                                <span class="dc-value">$2,251</span>
                             </div>
-                            <div class="valuation-item">
-                                <div class="valuation-label">Confidence</div>
-                                <div class="valuation-value">Moderate</div>
+                            <div class="data-cell">
+                                <span class="dc-label">Count</span>
+                                <span class="dc-value">25</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="dc-label">Median</span>
+                                <span class="dc-value">$88</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="dc-label">Range</span>
+                                <span class="dc-value">$17-$238</span>
                             </div>
                         </div>
-                        <div class="outlook-text">
-                            <strong>2026 Outlook:</strong> High variance suggests base-plus-commission income or tax intercepts. Large $200+ payments act as accelerators shortening total term. Calculate NPV using median ($88) rather than average to avoid over-bidding on spike data.
+
+                        <div class="outlook-box">
+                            <strong>Analyst Note</strong>
+                            High variance suggests commission income. Use median ($88) for NPV, not average.
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 3: Steady Floor -->
                 <div class="claim-card steady">
-                    <div class="claim-card-header">
-                        <span class="profile-badge steady">Steady Floor</span>
-                        <div class="claim-card-id">AUGT-2310260-23</div>
-                        <div class="claim-card-creditor">Easy Rider Auto • Augusta District</div>
+                    <div class="card-status-bar">
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Steady Floor</span>
+                        </div>
+                        <div class="card-id mono">ID: AUGT-2310</div>
                     </div>
                     
-                    <div class="claim-card-body">
-                        <div class="composite-score">
-                            <div class="composite-score-label">Overall Score</div>
-                            <div class="composite-score-value">91</div>
-                        </div>
+                    <div class="card-content">
+                        <div class="creditor-name">Easy Rider Auto • Augusta</div>
                         
-                        <div class="score-grid">
-                            <div class="score-item">
-                                <div class="score-label">Volatility</div>
-                                <div class="score-value excellent">98</div>
+                        <div class="score-dashboard">
+                            <div class="main-score">
+                                <div class="score-ring" style="color: var(--brand-blue)">91</div>
+                                <div class="score-label">Composite</div>
                             </div>
-                            <div class="score-item">
-                                <div class="score-label">Velocity</div>
-                                <div class="score-value good">70</div>
-                            </div>
-                            <div class="score-item">
-                                <div class="score-label">Predictable</div>
-                                <div class="score-value excellent">95</div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">Total Paid</div>
-                                <div class="stat-value">$597</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Payments</div>
-                                <div class="stat-value">10</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Fixed Rate</div>
-                                <div class="stat-value">$60/mo</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Variance</div>
-                                <div class="stat-value">±$0</div>
+                            <div class="mini-scores">
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--check-green)">98</div>
+                                    <div class="mini-lbl">Vol</div>
+                                </div>
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--text-main)">70</div>
+                                    <div class="mini-lbl">Vel</div>
+                                </div>
+                                <div class="mini-score-item">
+                                    <div class="mini-val" style="color:var(--check-green)">95</div>
+                                    <div class="mini-lbl">Pred</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="valuation-section">
-                        <div class="valuation-grid">
-                            <div class="valuation-item">
-                                <div class="valuation-label">Suggested IRR</div>
-                                <div class="valuation-value">10%</div>
+
+                        <div class="data-grid">
+                            <div class="data-cell">
+                                <span class="dc-label">Total Paid</span>
+                                <span class="dc-value">$597</span>
                             </div>
-                            <div class="valuation-item">
-                                <div class="valuation-label">Confidence</div>
-                                <div class="valuation-value">High</div>
+                            <div class="data-cell">
+                                <span class="dc-label">Count</span>
+                                <span class="dc-value">10</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="dc-label">Fixed Rate</span>
+                                <span class="dc-value">$60</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="dc-label">Variance</span>
+                                <span class="dc-value">±$0</span>
                             </div>
                         </div>
-                        <div class="outlook-text">
-                            <strong>2026 Outlook:</strong> "Set it and forget it" claim with statistically identical payments. Debtor's disposable income is stable and trustee administration is streamlined. Easiest to model for NPV. Any deviation from this precision is a major warning sign.
+
+                        <div class="outlook-box">
+                            <strong>Analyst Note</strong>
+                            Statistically identical payments. Streamlined administration. Easiest to model.
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -810,129 +555,82 @@ Copy
     <section id="pricing">
         <div class="container">
             <div class="section-header">
-                <h2>Institutional Intelligence Tiers</h2>
+                <h2>Intelligence Tiers</h2>
                 <p class="subtitle">Select the data depth that matches your underwriting requirements.</p>
             </div>
             
             <div class="pricing-cards">
                 <div class="pricing-card">
                     <div class="price">$5,000<span>/mo</span></div>
-                    <div style="font-weight: 800; font-size: 1.5rem; margin-bottom: 0.5rem;">Plan Intelligence</div>
-                    <p style="color: var(--text-muted); font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem;">Portfolio screening and bid validation</p>
-                    <ul style="list-style: none; margin-bottom: 2rem; line-height: 2;">
-                        <li>✓ Plan payment amounts & schedules</li>
-                        <li>✓ 90-day payment activity tracking</li>
-                        <li>✓ Non-performing account identification</li>
-                        <li>✓ Feasibility scoring</li>
-                        <li>✓ 10 portfolio evaluations/month</li>
+                    <div style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-main);">Plan Intelligence</div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Screening and bid validation</p>
+                    <ul class="price-list" style="list-style: none;">
+                        <li><span class="check">✓</span> Plan payment amounts</li>
+                        <li><span class="check">✓</span> 90-day activity tracking</li>
+                        <li><span class="check">✓</span> Non-performing identification</li>
+                        <li><span class="check">✓</span> Feasibility scoring</li>
+                        <li><span class="check">✓</span> 10 evaluations/month</li>
                     </ul>
-                    <a href="https://buy.stripe.com/fZu00ieGYd0o7Do66Zcs80" class="btn-card" style="background: var(--brand-dark); color: white;">Subscribe Now</a>
+                    <a href="#" class="btn-card secondary">Subscribe</a>
                 </div>
 
                 <div class="pricing-card featured">
-                    <div class="badge">Most Popular</div>
+                    <div style="position: absolute; top: 1.5rem; right: 1.5rem; color: var(--brand-blue); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Recommended</div>
                     <div class="price">$8,500<span>/mo</span></div>
-                    <div style="font-weight: 800; font-size: 1.5rem; margin-bottom: 0.5rem;">Claim Forensics</div>
-                    <p style="color: var(--text-muted); font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem;">Deep due diligence and recovery projections</p>
-                    <ul style="list-style: none; margin-bottom: 2rem; line-height: 2;">
-                        <li>✓ <strong>Everything in Plan Intelligence</strong></li>
-                        <li>✓ Complete creditor payment ledgers</li>
-                        <li>✓ Historical disbursement tracking</li>
-                        <li>✓ Proof of claim verification</li>
-                        <li>✓ Recovery rate projections</li>
-                        <li>✓ Pro-rata distribution analysis</li>
-                        <li>✓ Priority phone support</li>
+                    <div style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-main);">Claim Forensics</div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Deep diligence & recovery projections</p>
+                    <ul class="price-list" style="list-style: none;">
+                        <li><span class="check">✓</span> <strong>Everything in Plan Intelligence</strong></li>
+                        <li><span class="check">✓</span> Complete creditor ledgers</li>
+                        <li><span class="check">✓</span> Proof of claim verification</li>
+                        <li><span class="check">✓</span> Recovery rate projections</li>
+                        <li><span class="check">✓</span> Pro-rata distribution analysis</li>
                     </ul>
-                    <a href="https://buy.stripe.com/28E3cu8iAgcA3n8fHzcs800" class="btn-card" style="background: var(--brand-blue); color: white; border: none;">Subscribe Now</a>
+                    <a href="#" class="btn-card primary">Subscribe</a>
                 </div>
             </div>
 
             <div class="section-header" id="comparison">
-                <h2>Intelligence Capabilities Matrix</h2>
-                <p class="subtitle">Detailed comparison of data fields and features across both tiers.</p>
+                <h2>Capabilities Matrix</h2>
             </div>
 
             <div class="comparison-container">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 50%;">Data Field / Feature</th>
+                            <th style="width: 50%;">Data Field</th>
                             <th style="text-align:center; width: 25%;">Plan Intelligence</th>
-                            <th style="text-align:center; width: 25%;">Claim Forensics</th>
+                            <th style="text-align:center; width: 25%; color: var(--text-main);">Claim Forensics</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Monthly Subscription</td><td style="text-align:center; font-weight:700;">$5,000</td><td style="text-align:center; font-weight:700;">$8,500</td></tr>
-                        <tr><td>Portfolio Evaluations / Month</td><td style="text-align:center">10</td><td style="text-align:center">10</td></tr>
-                        
                         <tr class="category-row"><td colspan="3">Debtor Information</td></tr>
-                        <tr><td>Debtor & Joint Debtor Names</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Debtor Addresses</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Debtor Aliases & DBA names</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Debtor Last four SSN</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Joint Filing Identification</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
+                        <tr><td>Debtor Identities & SSN</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>Joint Filing Status</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
                         
                         <tr class="category-row"><td colspan="3">Case Status Intelligence</td></tr>
-                        <tr><td>Case status</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Petition Filed Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Plan Filed Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>First 341 Meeting Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Case Confirmed Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Confirmation Hearing Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Case Closed Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>First Payment Due Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
+                        <tr><td>Case Dates (Petition, Plan, Conf)</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>First Payment Due Date</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
 
                         <tr class="category-row"><td colspan="3">Plan Payment Structure</td></tr>
-                        <tr><td>Debtor Direct Payment Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Debtor Payroll Deduction Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Joint Debtor Direct Payment Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Joint Debtor Payroll Deduction Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Plan Base Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Estimated Months Remaining</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-
-                        <tr class="category-row"><td colspan="3">Trustee Information</td></tr>
-                        <tr><td>Trustee name</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Trustee city/district</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Trustee percentage rate</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Trustee paid to date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-
-                        <tr class="category-row"><td colspan="3">Payment Performance Tracking</td></tr>
-                        <tr><td>Total Paid into Plan</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Total Paid to All Parties</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Total Paid to creditors</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Balance on Hand</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Last Receipt Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Last Receipt Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Last Disbursement Date</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Delinquency Amount</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-
-                        <tr class="category-row"><td colspan="3">Claim & Distribution Data</td></tr>
-                        <tr><td>Unsecured Percentage</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Unsecured Interest Rate</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Minimum to Unsecured Creditors</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Claim Total Owed</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Claim Amount Outstanding</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
+                        <tr><td>Direct vs Payroll Deduction</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>Plan Base Amount</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>Est. Months Remaining</td><td style="text-align:center" class="check">●</td><td style="text-align:center" class="check">●</td></tr>
 
                         <tr class="category-row"><td colspan="3">Creditor Payment Ledger (Per Claim)</td></tr>
-                        <tr><td>Matched Name of Creditor</td><td style="text-align:center" class="cross">✗</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Creditor Payment Received Dates</td><td style="text-align:center" class="cross">✗</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Creditor Payment Received Amounts</td><td style="text-align:center" class="cross">✗</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Payment Descriptions (Principal Disbursement, Interest, etc.)</td><td style="text-align:center" class="cross">✗</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Complete Plan Payment History</td><td style="text-align:center" class="cross">✗</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Total Claims Count</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-
-                        <tr class="category-row"><td colspan="3">Delivery & Support</td></tr>
-                        <tr><td>CSV Export</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Support Channel</td><td style="text-align:center">Email</td><td style="text-align:center">Priority Phone</td></tr>
+                        <tr><td>Matched Name of Creditor</td><td style="text-align:center" class="cross">/</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>Creditor Receipt Dates</td><td style="text-align:center" class="cross">/</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>Disbursement Descriptions</td><td style="text-align:center" class="cross">/</td><td style="text-align:center" class="check">●</td></tr>
+                        <tr><td>Complete Payment History</td><td style="text-align:center" class="cross">/</td><td style="text-align:center" class="check">●</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 
-    <footer style="padding: 6rem 0; text-align: center; border-top: 1px solid var(--border);">
-        <p style="font-weight: 800; margin-bottom: 1rem; color: var(--brand-dark);">Portfolio Intelligence Labs</p>
-        <p style="color: var(--text-muted); font-size: 0.85rem;">© 2026 Portfolio Intelligence Labs. All rights reserved.</p>
+    <footer style="padding: 4rem 0; text-align: center; border-top: 1px solid var(--border);">
+        <p style="font-weight: 700; margin-bottom: 1rem; color: var(--text-main); letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem;">Portfolio Intelligence Labs</p>
+        <p style="color: var(--text-dim); font-size: 0.8rem;">© 2026. Institutional Rights Reserved.</p>
     </footer>
 </body>
 </html>
