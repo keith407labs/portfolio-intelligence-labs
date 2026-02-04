@@ -1,3 +1,6 @@
+Index prescriptive · HTML
+Copy
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +22,7 @@
             --check-green: #10B981;
             --amber: #F59E0B;
             --red: #EF4444;
+            --purple: #8B5CF6;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -245,7 +249,7 @@
             margin: -0.5rem 0;
         }
 
-        /* --- CLAIM ANALYSIS CARDS --- */
+        /* --- PRESCRIPTIVE CLAIM ANALYSIS CARDS --- */
         .claim-analysis-section {
             padding: 6rem 0;
             margin-bottom: 4rem;
@@ -262,7 +266,7 @@
             background: white;
             border: 2px solid var(--border);
             border-radius: 24px;
-            padding: 2rem;
+            padding: 0;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -275,6 +279,17 @@
             left: 0;
             right: 0;
             height: 4px;
+        }
+
+        .claim-card.blue-chip::before {
+            background: linear-gradient(90deg, var(--check-green), #059669);
+        }
+
+        .claim-card.lumpy::before {
+            background: linear-gradient(90deg, var(--amber), #D97706);
+        }
+
+        .claim-card.steady::before {
             background: linear-gradient(90deg, var(--brand-blue), #667eea);
         }
 
@@ -284,13 +299,64 @@
         }
 
         .claim-card-header {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
+            padding: 2rem 2rem 1.5rem;
             border-bottom: 1px solid var(--border);
         }
 
-        .claim-card-title {
-            font-size: 0.75rem;
+        .profile-badge {
+            display: inline-block;
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .profile-badge.blue-chip {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .profile-badge.lumpy {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .profile-badge.steady {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .claim-card-id {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--brand-dark);
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        .claim-card-creditor {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .claim-card-body {
+            padding: 1.5rem 2rem;
+        }
+
+        .composite-score {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--brand-blue-soft), rgba(239, 246, 255, 0.3));
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .composite-score-label {
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
@@ -298,87 +364,110 @@
             margin-bottom: 0.5rem;
         }
 
-        .claim-card-id {
-            font-size: 1.1rem;
+        .composite-score-value {
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--brand-dark);
-            font-family: 'Courier New', monospace;
+            color: var(--brand-blue);
+            line-height: 1;
         }
 
-        .claim-stat {
-            margin-bottom: 1.25rem;
-        }
-
-        .claim-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-        }
-
-        .claim-stat-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--brand-dark);
-        }
-
-        .claim-stat-value.positive {
-            color: var(--check-green);
-        }
-
-        .claim-stat-value.warning {
-            color: var(--amber);
-        }
-
-        .claim-stat-value.negative {
-            color: var(--red);
-        }
-
-        .claim-metrics {
+        .score-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
+            margin-bottom: 1.5rem;
         }
 
-        .metric {
+        .score-item {
             text-align: center;
         }
 
-        .metric-label {
+        .score-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--text-muted);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .metric-value {
+        .score-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-value.excellent { color: var(--check-green); }
+        .score-value.good { color: var(--brand-blue); }
+        .score-value.moderate { color: var(--amber); }
+        .score-value.poor { color: var(--red); }
+
+        .payment-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #F8FAFC;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--brand-dark);
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
+        .valuation-section {
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+        }
+
+        .valuation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .valuation-item {
+            text-align: center;
+        }
+
+        .valuation-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-top: 1rem;
         }
 
-        .status-badge.active {
-            background: #D1FAE5;
-            color: #065F46;
+        .valuation-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--brand-blue);
         }
 
-        .status-badge.warning {
-            background: #FEF3C7;
-            color: #92400E;
+        .outlook-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            padding: 1rem;
+            background: var(--brand-blue-soft);
+            border-radius: 8px;
+            border-left: 3px solid var(--brand-blue);
         }
 
         /* --- PRICING CARDS --- */
@@ -478,6 +567,7 @@
             .tier-priority { text-align: center; }
         }
     </style>
+    
 </head>
 <body>
 
