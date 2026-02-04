@@ -243,72 +243,14 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Underwrite Chapter 13 portfolios<br>with <span>actual payment data.</span></h1>
-            <p>Institutional-grade intelligence for debt buyers. Track real-time plan payments, identify non-performing accounts, and validate recovery projections before you bid.</p>
+            <h1>Underwrite Chapter 13 portfolios<br>with <span>payment data.</span></h1>
+            <p>Institutional-grade intelligence for debt buyers. See real-time plan payments, identify non-performing accounts, and validate recovery projections before you bid.</p>
             <a href="#pricing" class="btn-outline" style="background: var(--brand-blue); color: white !important; border: none; padding: 1.2rem 2.5rem; font-size: 1.1rem;">Request Portfolio Audit</a>
         </div>
     </section>
 
     <section id="pricing">
         <div class="container">
-
-            <div class="section-header">
-                <h2>Payment History Impact Calculator</h2>
-                <p class="subtitle">Estimate the cash flow improvement from identifying accounts with strong vs. weak payment histories in Chapter 13 portfolios.</p>
-            </div>
-            
-            <div class="calculator-card">
-                <div class="calc-inputs">
-                    <div class="calc-input-group">
-                        <label>Monthly Portfolio Acquisition ($)</label>
-                        <input type="text" id="acquisitionVolumeDisplay" value="2,000,000" oninput="formatAndCalculate()">
-                        <input type="hidden" id="acquisitionVolume" value="2000000">
-                    </div>
-                    
-                    <div class="calc-input-group">
-                        <label>Accounts with Weak Payment History (%)</label>
-                        <input type="number" id="weakPaymentPct" value="15" step="1" min="0" max="50" oninput="calculateImpact()">
-                        <p style="font-size: 0.75rem; color: #94A3B8; margin-top: -10px; margin-bottom: 15px;">
-                            Industry average: 12-18% of accounts show irregular or missed payments
-                        </p>
-                    </div>
-
-                    <div class="calc-input-group">
-                        <label>Expected Recovery Improvement (%)</label>
-                        <input type="number" id="recoveryImprovement" value="8" step="1" min="0" max="30" oninput="calculateImpact()">
-                        <p style="font-size: 0.75rem; color: #94A3B8; margin-top: -10px; margin-bottom: 15px;">
-                            Better payment data typically improves portfolio recovery by 5-12%
-                        </p>
-                    </div>
-            
-                    <div class="calc-input-group">
-                        <label>Intelligence Tier</label>
-                        <select id="dataCost" onchange="calculateImpact()" style="width: 100%; background: #1E293B; border: 1px solid #334155; padding: 1rem; border-radius: 12px; color: white; font-size: 1.1rem; font-family: inherit;">
-                            <option value="60000">Plan Intelligence ($60,000/yr)</option>
-                            <option value="102000" selected>Claim Forensics ($102,000/yr)</option>
-                        </select>
-                    </div>
-                </div>
-            
-                <div class="roi-display">
-                    <div class="roi-stat">
-                        <h4>Monthly Cash Flow Improvement</h4>
-                        <div class="val" id="monthlyCashFlow">$24,000</div>
-                    </div>
-                    <div class="roi-stat">
-                        <h4>Annual Portfolio Value Gain</h4>
-                        <div class="val" id="annualValue">$288,000</div>
-                    </div>
-                    <div class="roi-stat roi-final">
-                        <h4>Estimated Annual ROI</h4>
-                        <div class="val" id="roiTotal">2.8 : 1</div>
-                    </div>
-                    <p style="font-size: 0.75rem; color: #94A3B8; margin-top: 1rem; line-height: 1.5;">
-                        Based on improved recovery rates from payment history intelligence. Actual results vary by portfolio composition and collection strategy.
-                    </p>
-                </div>
-            </div>
-
             <div class="section-header">
                 <h2>Institutional Intelligence Tiers</h2>
                 <p class="subtitle">Select the data depth that matches your underwriting requirements.</p>
@@ -401,7 +343,6 @@
 
                         <tr class="category-row"><td colspan="3">Delivery & Support</td></tr>
                         <tr><td>CSV/Excel export</td><td style="text-align:center" class="check">✓</td><td style="text-align:center" class="check">✓</td></tr>
-                        <tr><td>Audit-ready documentation</td><td style="text-align:center" class="cross">✗</td><td style="text-align:center" class="check">✓</td></tr>
                         <tr><td>Support Channel</td><td style="text-align:center">Email</td><td style="text-align:center">Priority Phone</td></tr>
                     </tbody>
                 </table>
@@ -413,51 +354,5 @@
         <p style="font-weight: 800; margin-bottom: 1rem; color: var(--brand-dark);">Portfolio Intelligence Labs</p>
         <p style="color: var(--text-muted); font-size: 0.85rem;">© 2026 Portfolio Intelligence Labs. All rights reserved.</p>
     </footer>
-
-    <script>
-        /**
-         * Formats the display input with commas and updates the hidden value for calculation
-         */
-        function formatAndCalculate() {
-            const displayInput = document.getElementById('acquisitionVolumeDisplay');
-            let rawValue = displayInput.value.replace(/,/g, '');
-            
-            if (!isNaN(rawValue) && rawValue !== "") {
-                displayInput.value = parseFloat(rawValue).toLocaleString();
-                document.getElementById('acquisitionVolume').value = rawValue;
-                calculateImpact();
-            }
-        }
-
-        /**
-         * Calculate cash flow improvement from payment history intelligence
-         * 
-         * Logic: Better payment data helps identify strong-performing accounts,
-         * improving overall recovery rates on the portfolio
-         */
-        function calculateImpact() {
-            const acquisitionVolume = parseFloat(document.getElementById('acquisitionVolume').value) || 0;
-            const weakPaymentPct = (parseFloat(document.getElementById('weakPaymentPct').value) || 0) / 100;
-            const recoveryImprovement = (parseFloat(document.getElementById('recoveryImprovement').value) || 0) / 100;
-            const annualDataCost = parseFloat(document.getElementById('dataCost').value);
-
-            // Calculate the value gain from improved recovery rates
-            // This is the portion of the portfolio where payment intelligence improves outcomes
-            const affectedPortionValue = acquisitionVolume * weakPaymentPct;
-            const monthlyCashFlowGain = affectedPortionValue * recoveryImprovement;
-            const annualValueGain = monthlyCashFlowGain * 12;
-            
-            // ROI calculation
-            const roiRatio = annualDataCost > 0 ? (annualValueGain / annualDataCost) : 0;
-
-            // Update the display
-            document.getElementById('monthlyCashFlow').innerText = '$' + monthlyCashFlowGain.toLocaleString(undefined, {maximumFractionDigits: 0});
-            document.getElementById('annualValue').innerText = '$' + annualValueGain.toLocaleString(undefined, {maximumFractionDigits: 0});
-            document.getElementById('roiTotal').innerText = roiRatio.toFixed(1) + ' : 1';
-        }
-
-        // Run calculation on page load
-        window.onload = calculateImpact;
-    </script>
 </body>
 </html>
