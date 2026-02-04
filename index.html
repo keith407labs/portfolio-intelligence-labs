@@ -77,7 +77,35 @@
             font-weight: 400;
         }
 
-        /* Pricing Section */
+        /* Calculator Styles */
+        .calculator-card {
+            background: var(--brand-dark);
+            color: white;
+            padding: 4rem;
+            border-radius: 32px;
+            margin-bottom: 8rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .calc-input-group { margin-bottom: 1.5rem; }
+        .calc-input-group label { display: block; font-size: 0.85rem; color: #94A3B8; margin-bottom: 0.5rem; font-weight: 600; }
+        .calc-input-group input { 
+            width: 100%; background: #1E293B; border: 1px solid #334155; 
+            padding: 1rem; border-radius: 12px; color: white; font-size: 1.2rem; 
+            font-family: inherit; font-weight: 700;
+        }
+
+        .roi-display { text-align: right; }
+        .roi-stat { margin-bottom: 2rem; }
+        .roi-stat h4 { color: var(--brand-blue); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .roi-stat .val { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; }
+        .roi-final { background: rgba(79, 110, 247, 0.1); border: 1px solid var(--brand-blue); padding: 1.5rem; border-radius: 20px; }
+        .roi-final .val { color: var(--brand-blue); }
+
+        /* Pricing & Table Styles */
         #pricing { padding: 8rem 0; }
         .section-header { text-align: center; margin-bottom: 5rem; }
         .section-header h2 { font-size: 3.2rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 1rem; }
@@ -91,59 +119,32 @@
         }
 
         .pricing-card {
-            background: white;
-            padding: 3.5rem;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            position: relative;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            background: white; padding: 3.5rem; border-radius: 32px;
+            border: 1px solid var(--border); position: relative;
+            transition: 0.4s ease;
         }
-
-        .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
         .pricing-card.featured { border: 2px solid var(--brand-blue); }
-
         .badge {
             position: absolute; top: 1.5rem; right: 1.5rem;
             background: var(--brand-blue); color: white;
             padding: 0.5rem 1rem; border-radius: 50px;
-            font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
         }
-
         .price { font-size: 4rem; font-weight: 800; margin: 1rem 0; letter-spacing: -2px; }
-        .price span { font-size: 1.1rem; color: var(--text-muted); letter-spacing: 0; font-weight: 500; }
-
-        .btn-card {
-            width: 100%; padding: 1.25rem; border-radius: 16px;
-            border: 1px solid var(--brand-dark); background: transparent;
-            font-weight: 700; cursor: pointer; transition: 0.3s;
-            text-align: center; text-decoration: none; display: block;
-        }
-        .btn-card.primary { background: var(--brand-dark); color: white; }
-        .btn-card:hover { background: var(--brand-blue); border-color: var(--brand-blue); color: white; }
-
-        /* Comparison Table */
+        .price span { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
+        
         .comparison-container {
-            background: white;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            margin-top: 4rem;
+            background: white; border-radius: 32px; border: 1px solid var(--border); overflow: hidden;
         }
-
-        table { width: 100%; border-collapse: collapse; text-align: left; }
+        table { width: 100%; border-collapse: collapse; }
         th, td { padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); }
-        
-        .category-row { background: var(--bg-light); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--brand-blue); }
-        .feature-name { font-weight: 600; width: 50%; }
-        .plan-val { width: 25%; text-align: center; font-weight: 500; }
-        
-        .check { color: var(--check-green); font-weight: bold; font-size: 1.2rem; }
-        .cross { color: #CBD5E1; font-weight: bold; }
+        .category-row { background: var(--bg-light); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: var(--brand-blue); }
+        .check { color: var(--check-green); font-weight: bold; }
 
         @media (max-width: 900px) {
             .hero h1 { font-size: 3.2rem; }
-            .feature-name { width: 40%; }
-            th, td { padding: 1rem; font-size: 0.9rem; }
+            .calculator-card { grid-template-columns: 1fr; padding: 2rem; text-align: left; }
+            .roi-display { text-align: left; }
         }
     </style>
 </head>
@@ -169,9 +170,51 @@
 
     <section id="pricing">
         <div class="container">
+            
             <div class="section-header">
-                <h2>Plan Comparison</h2>
-                <p class="subtitle">Detailed data intelligence levels for every stage of your due diligence workflow.</p>
+                <h2>Calculate Your Edge</h2>
+                <p class="subtitle">See how conservative bid improvements transform your bottom line.</p>
+            </div>
+
+            <div class="calculator-card">
+                <div class="calc-inputs">
+                    <div class="calc-input-group">
+                        <label>TYPICAL MONTHLY BID VOLUME ($)</label>
+                        <input type="number" id="bidVolume" value="2000000" oninput="calculateROI()">
+                    </div>
+                    <div class="calc-input-group">
+                        <label>ESTIMATED BID IMPROVEMENT (%)</label>
+                        <input type="number" id="improvementPct" value="3" oninput="calculateROI()">
+                        <p style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">Conservative estimate based on better feasibility scoring and zombie case removal.</p>
+                    </div>
+                    <div class="calc-input-group">
+                        <label>ANNUAL DATA COST ($)</label>
+                        <select id="dataCost" onchange="calculateROI()" style="width: 100%; background: #1E293B; border: 1px solid #334155; padding: 1rem; border-radius: 12px; color: white; font-size: 1.1rem; font-family: inherit;">
+                            <option value="60000">Plan Intelligence ($60,000/yr)</option>
+                            <option value="102000" selected>Claim Forensics ($102,000/yr)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="roi-display">
+                    <div class="roi-stat">
+                        <h4>Monthly Capital Saved</h4>
+                        <div class="val" id="monthlySaved">$60,000</div>
+                    </div>
+                    <div class="roi-stat">
+                        <h4>Annual Capital Saved</h4>
+                        <div class="val" id="annualSaved">$720,000</div>
+                    </div>
+                    <div class="roi-stat roi-final">
+                        <h4>Estimated Annual ROI</h4>
+                        <div class="val" id="roiTotal">7.1 : 1</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>Scalable Intelligence</h2>
+                <p class="subtitle">Choose the intelligence level that matches your workflow.</p>
             </div>
             
             <div class="pricing-cards">
@@ -180,7 +223,7 @@
                     <div class="price">$5,000<span>/mo</span></div>
                     <div style="font-weight: 800; font-size: 1.4rem; margin-bottom: 0.5rem;">Plan Intelligence</div>
                     <p style="color: var(--brand-blue); font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem;">Screening & Bid Decisions</p>
-                    <a href="#" class="btn-card">Get Started</a>
+                    <a href="#" class="btn-card" style="background: var(--brand-dark); color: white;">Get Started</a>
                 </div>
 
                 <div class="pricing-card featured">
@@ -189,54 +232,16 @@
                     <div class="price">$8,500<span>/mo</span></div>
                     <div style="font-weight: 800; font-size: 1.4rem; margin-bottom: 0.5rem;">Claim Forensics</div>
                     <p style="color: var(--brand-blue); font-weight: 600; font-size: 0.9rem; margin-bottom: 2rem;">Final Verification & Recovery</p>
-                    <a href="#" class="btn-card primary">Get Started</a>
+                    <a href="#" class="btn-card" style="background: var(--brand-blue); color: white; border: none;">Get Started</a>
                 </div>
             </div>
 
             <div class="comparison-container">
                 <table>
-                    <thead>
-                        <tr>
-                            <th class="feature-name">Data Points</th>
-                            <th class="plan-val">Plan Intelligence</th>
-                            <th class="plan-val">Claim Forensics</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="feature-name">Portfolio Evaluations</td>
-                            <td class="plan-val">10</td>
-                            <td class="plan-val">10</td>
-                        </tr>
-                        <tr class="category-row"><td colspan="3">Case Intelligence</td></tr>
-                        <tr><td>Case status & chapter</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Filing & confirmation dates</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Plan payment amount</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Plan duration & months remaining</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        
-                        <tr class="category-row"><td colspan="3">Performance Tracking</td></tr>
-                        <tr><td>90-day payment activity</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Zombie case flagging</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Feasibility scoring</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        
-                        <tr class="category-row"><td colspan="3">Creditor-Level Data</td></tr>
-                        <tr><td>Full ledger history</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Check numbers & disbursement tracking</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Average monthly disbursement</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        
-                        <tr class="category-row"><td colspan="3">Claim Verification</td></tr>
-                        <tr><td>Proof of Claim (POC) filed amount</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Allowed vs. Filed comparison</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        
-                        <tr class="category-row"><td colspan="3">Projections</td></tr>
-                        <tr><td>Recovery projection (%)</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Pro-rata share analysis</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-
-                        <tr class="category-row"><td colspan="3">Exports & Support</td></tr>
-                        <tr><td>CSV/Excel export</td><td class="plan-val check">✓</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Audit-ready documentation</td><td class="plan-val cross">✗</td><td class="plan-val check">✓</td></tr>
-                        <tr><td>Support tier</td><td class="plan-val">Email</td><td class="plan-val">Priority Phone</td></tr>
-                    </tbody>
+                    <tr class="category-row"><td colspan="3">Detailed Plan Comparison</td></tr>
+                    <tr><td style="font-weight: 600;">Portfolio Evaluations</td><td style="text-align:center">10</td><td style="text-align:center">10</td></tr>
+                    <tr><td>Full Ledger History</td><td style="text-align:center">✗</td><td style="text-align:center" class="check">✓</td></tr>
+                    <tr><td>Recovery Projections</td><td style="text-align:center">✗</td><td style="text-align:center" class="check">✓</td></tr>
                 </table>
             </div>
         </div>
@@ -247,5 +252,20 @@
         <p style="color: var(--text-muted); font-size: 0.85rem;">© 2026 Portfolio Intelligence Labs. All rights reserved.</p>
     </footer>
 
+    <script>
+        function calculateROI() {
+            const bidVolume = document.getElementById('bidVolume').value;
+            const improvement = document.getElementById('improvementPct').value / 100;
+            const annualCost = document.getElementById('dataCost').value;
+
+            const monthlySaved = bidVolume * improvement;
+            const annualSaved = monthlySaved * 12;
+            const roi = annualSaved / annualCost;
+
+            document.getElementById('monthlySaved').innerText = '$' + monthlySaved.toLocaleString();
+            document.getElementById('annualSaved').innerText = '$' + annualSaved.toLocaleString();
+            document.getElementById('roiTotal').innerText = roi.toFixed(1) + ' : 1';
+        }
+    </script>
 </body>
 </html>
