@@ -170,17 +170,18 @@
     }
 
     /* --- HERO --- */
-    .hero { 
-    padding: 10rem 0 6rem; /* Adjusted top/bottom balance */
-    min-height: 90vh;      /* Ensures it takes up most of the screen */
-    display: flex;
-    align-items: center;
+    .hero {
+    min-height: 100vh;          /* Take up 100% of viewport height */
+    display: flex;              /* Use flexbox for alignment */
+    align-items: center;        /* Center vertically */
+    justify-content: center;    /* Center horizontally */
+    padding-top: 60px;          /* Slight offset for your fixed Navbar */
+    text-align: center;         /* Center the text itself */
     }
     .hero-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr; /* This creates the side-by-side layout */
-    gap: 4rem;
-    align-items: center;
+    display: block;             /* Disable the old Grid columns */
+    max-width: 800px;           /* Keep reading width comfortable */
+    margin: 0 auto;             /* Center this block in the container */
     }
     .hero h1 {
     font-size: 3.25rem; /* Reduced from 3.8rem to stop wrapping issues */
@@ -202,20 +203,23 @@
       font-weight: 350;
       margin-bottom: 2.0rem;
     }
+    /* Center the flex items (buttons/tags) */
     .hero-cta-row {
-      display: flex;
-      gap: 0.9rem;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-bottom: 1.5rem;
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;    /* Crucial: Centers buttons horizontally */
+    margin-bottom: 2rem;
     }
     .trust-row {
-      display: flex;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      align-items: center;
-      color: var(--text-dim);
-      font-size: 0.85rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;    /* Crucial: Centers the dot points */
+    color: var(--text-dim);
+    font-size: 0.9rem;
     }
     .trust-item { display: inline-flex; gap: 0.5rem; align-items: center; }
     .dot {
@@ -671,38 +675,40 @@
       </div>
     </div>
   </nav>
-
+    
+  <!-- Hero Section -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
         
-        <div style="padding-right: 2rem;">
+        <div>
           <div class="pill" style="display:inline-flex; gap:0.55rem; align-items:center; margin-bottom:1.5rem;">
             <span style="width:6px;height:6px;border-radius:50%;background:var(--brand-glow);box-shadow:0 0 12px rgba(96,165,250,0.7);"></span>
             Trustee Reconciliation
           </div>
-
+  
           <h1>Stop Overpaying for <br><span>Chapter 13 Paper.</span></h1>
           
-          <p>
+          <p style="margin-left: auto; margin-right: auto;">
             Most bid tapes rely on outdated plan text. We reconcile against <strong>live trustee disbursements</strong> to show you what creditors are actually receiving.
           </p>
-
+  
           <div class="hero-cta-row">
             <a href="#pricing" class="btn-primary">Start Pilot ($500)</a>
             <a href="#" class="btn-outline">Upload Tape</a>
           </div>
-
+  
           <div class="trust-row">
             <span class="trust-item"><span class="dot"></span> SQL-Ready CSVs</span>
             <span class="trust-item"><span class="dot" style="background:var(--violet);color:var(--violet);"></span> Discrepancy Reports</span>
           </div>
         </div>
+  
       </div>
     </div>
   </section>
 
-    <!-- NEW: Deal Screen Section -->
+    <!-- Deal Screen Section -->
     <section id="deal-screen" style="padding-top: 3rem;">
         <div class="container">
           <div class="section-header">
