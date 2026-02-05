@@ -553,56 +553,162 @@
             <span class="trust-item"><span class="dot" style="background:var(--violet);color:var(--violet);"></span> Discrepancy Reporting</span>
           </div>
         </div>
-
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <div class="hero-card-title">Deal Screen: <span style="color:var(--text-muted); font-weight:400; text-transform:none;">Tape #402</span></div>
-            <div class="pill">Example</div>
-          </div>
-          
-          <div class="hero-card-body">
-            <p style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:0.8rem; font-weight:700;">Valuation Intelligence</p>
-            
-            <div class="mono-block" style="font-size:0.75rem; line-height:1.8;">
-              <div style="display: grid; gap: 0.5rem;">
-                <div><span style="color:var(--check-green);">✓</span> <strong>Time-Decay Model:</strong> Recent payments weighted 2x (6mo half-life)</div>
-                <div><span style="color:var(--check-green);">✓</span> <strong>Waterfall Position:</strong> 14% Secured / 86% Unsecured split</div>
-                <div><span style="color:var(--amber);">⚠</span> <strong>Dormancy Alert:</strong> 427 claims inactive 60+ days (18%)</div>
-                <div><span style="color:var(--brand-glow);">→</span> <strong>Deliverables:</strong> 4 CSV files + sensitivity grid</div>
-              </div>
-            </div>
-        
-            <div class="mini-row">
-              <div class="mini">
-                <div class="k">Base Case NPV @ 18%</div>
-                <div class="v nums" style="color:var(--text-main);">$4,215,800</div>
-                <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">
-                  <span style="color:var(--check-green);">●</span> Current trajectory
-                </div>
-              </div>
-              
-              <div class="mini" style="border-color:rgba(239,68,68,0.25); background:rgba(239,68,68,0.03);">
-                <div class="k" style="color:var(--red);">15% Dismissal Scenario</div>
-                <div class="v nums" style="color:var(--text-main);">$3,105,240</div>
-                <div class="dim" style="font-size:0.75rem;margin-top:0.35rem; display:flex; align-items:center; gap:0.4rem;">
-                  <span style="color:var(--red); font-weight:700; background:rgba(239,68,68,0.1); padding:0 4px; border-radius:3px;">-26.3%</span>
-                  Downside risk
-                </div>
-              </div>
-            </div>
-        
-            <div class="tag-row" style="margin-top:1rem;">
-              <span class="tag" style="border-color:var(--border);">2,401 Claims</span>
-              <span class="tag" style="border-color:var(--border);">$10.5M Face Value</span>
-              <span class="tag" style="border-color:var(--border);">4 CSV Deliverables</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <section id="how">
+    <!-- NEW: Deal Screen Section -->
+    <section id="deal-screen" style="padding-top: 3rem;">
+        <div class="container">
+          <div class="section-header">
+            <h2>Deal Screen: Account-Level Intelligence</h2>
+            <p class="subtitle">
+              Every account evaluated with trustee-validated payment history, waterfall position, and dismissal-adjusted projections.
+            </p>
+          </div>
+    
+          <div class="deal-screen-wrap">
+            <div class="deal-screen-header">
+              <h3>Portfolio: Sample Tape #402</h3>
+              <div style="display: flex; gap: 0.6rem; align-items: center;">
+                <span class="pill">Live Data</span>
+                <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-dim);">Last Updated: Feb 5, 2026</span>
+              </div>
+            </div>
+    
+            <!-- Portfolio Overview -->
+            <div class="portfolio-overview">
+              <div class="overview-card">
+                <div class="label">Total Accounts</div>
+                <div class="value nums">2,401</div>
+                <div class="subtext">Across 47 trustees</div>
+              </div>
+              <div class="overview-card">
+                <div class="label">Face Value</div>
+                <div class="value nums">$10.5M</div>
+                <div class="subtext">Mixed asset portfolio</div>
+              </div>
+              <div class="overview-card">
+                <div class="label">Portfolio NPV @ 18%</div>
+                <div class="value nums">$4.2M</div>
+                <div class="subtext" style="color: var(--check-green);">40.2% recovery rate</div>
+              </div>
+              <div class="overview-card">
+                <div class="label">Avg. Monthly Payment</div>
+                <div class="value nums">$242</div>
+                <div class="subtext">6-month weighted avg</div>
+              </div>
+              <div class="overview-card" style="border-color: rgba(239,68,68,0.25);">
+                <div class="label">Dismissal Risk Accounts</div>
+                <div class="value nums" style="color: var(--red);">387</div>
+                <div class="subtext">16% of portfolio</div>
+              </div>
+            </div>
+    
+            <!-- Account Table -->
+            <div class="account-table-wrap">
+              <table class="account-table">
+                <thead>
+                  <tr>
+                    <th>Account ID</th>
+                    <th>Status</th>
+                    <th>Est. Dismissal</th>
+                    <th>Total Paid</th>
+                    <th>Payments</th>
+                    <th>Est. Remaining</th>
+                    <th>NPV @ 18%</th>
+                    <th>Recovery Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="account-id">ATLN-2211</td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td class="nums">Jan 2025</td>
+                    <td class="nums">$1,755</td>
+                    <td class="nums">16</td>
+                    <td class="nums">$975</td>
+                    <td class="nums" style="color: var(--check-green); font-weight: 600;">$2,730</td>
+                    <td class="nums">100%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">ALBQ-2310</td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td class="nums">Mar 2025</td>
+                    <td class="nums">$2,140</td>
+                    <td class="nums">22</td>
+                    <td class="nums">$1,820</td>
+                    <td class="nums" style="color: var(--check-green); font-weight: 600;">$3,580</td>
+                    <td class="nums">90%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">PHOE-1847</td>
+                    <td><span class="status-badge dismissed">Dismissed</span></td>
+                    <td class="nums">—</td>
+                    <td class="nums">$840</td>
+                    <td class="nums">8</td>
+                    <td class="nums">$0</td>
+                    <td class="nums" style="color: var(--red); font-weight: 600;">$0</td>
+                    <td class="nums">12%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">DALL-3192</td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td class="nums">Aug 2025</td>
+                    <td class="nums">$3,280</td>
+                    <td class="nums">28</td>
+                    <td class="nums">$2,450</td>
+                    <td class="nums" style="color: var(--check-green); font-weight: 600;">$4,920</td>
+                    <td class="nums">85%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">HOUS-2674</td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td class="nums">May 2025</td>
+                    <td class="nums">$1,920</td>
+                    <td class="nums">18</td>
+                    <td class="nums">$1,340</td>
+                    <td class="nums" style="color: var(--check-green); font-weight: 600;">$2,885</td>
+                    <td class="nums">88%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">MIAM-1523</td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td class="nums">—</td>
+                    <td class="nums">$4,850</td>
+                    <td class="nums">36</td>
+                    <td class="nums">$0</td>
+                    <td class="nums" style="color: var(--brand-glow); font-weight: 600;">$4,850</td>
+                    <td class="nums">100%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">AUST-2938</td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td class="nums">Dec 2025</td>
+                    <td class="nums">$2,575</td>
+                    <td class="nums">24</td>
+                    <td class="nums">$3,120</td>
+                    <td class="nums" style="color: var(--check-green); font-weight: 600;">$4,850</td>
+                    <td class="nums">95%</td>
+                  </tr>
+                  <tr>
+                    <td class="account-id">SEAW-3401</td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td class="nums">Jun 2025</td>
+                    <td class="nums">$1,485</td>
+                    <td class="nums">14</td>
+                    <td class="nums">$890</td>
+                    <td class="nums" style="color: var(--check-green); font-weight: 600;">$2,140</td>
+                    <td class="nums">90%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how">
     <div class="container">
       <div class="section-header">
         <h2>From Bid Tape to Alpha</h2>
@@ -808,33 +914,50 @@
         <div class="pricing-card featured">
           <div class="pill" style="position:absolute; top:1.3rem; right:1.3rem;">Zero Friction Pilot</div>
           <div class="price nums">$500 <span>flat fee</span></div>
-          <div class="pricing-title">Pilot Validation Round</div>
-          <div class="pricing-sub">Validate a live bid tape (up to <strong>2,000 accounts</strong>). Receive full underwriting datasets to audit your internal models.</div>
+          <div class="pricing-title">Pilot Validation</div>
+          <div class="pricing-sub">Validate a live bid tape (up to <strong>2,000 accounts</strong>). Full underwriting datasets to audit your internal models.</div>
 
           <ul class="bullets">
             <li><span class="tick">✓</span> Full Datasets: <span class="mono">ledgers.csv</span>, <span class="mono">claims.csv</span></li>
             <li><span class="tick">✓</span> <strong>Seller Discrepancy Report</strong> (Plan vs. Actual)</li>
             <li><span class="tick">✓</span> Mixed Asset Support (Auto/Mortgage/Unsecured)</li>
-            <li><span class="tick">✓</span> Sensitivity Grid (Discount Rate vs. Dismissal Hazard)</li>
+            <li><span class="tick">✓</span> Valuation Package with NPV scenarios</li>
             <li><span class="tick">✓</span> 48-Hour Turnaround</li>
           </ul>
 
           <div class="cta-wide">
             <a href="#" class="btn-primary">Start Pilot Validation</a>
-            <a href="#" class="btn-outline">Client Login</a>
+          </div>
+        </div>
+
+        <div class="pricing-card">
+          <div class="price nums">$5,000 <span>/mo</span></div>
+          <div class="pricing-title">Data Subscription</div>
+          <div class="pricing-sub">For teams who need raw trustee data and claim rosters but handle valuation modeling internally.</div>
+
+          <ul class="bullets">
+            <li><span class="tick">✓</span> Unlimited Portfolio Uploads</li>
+            <li><span class="tick">✓</span> Trustee Disbursement Ledgers</li>
+            <li><span class="tick">✓</span> Claims & Waterfall Snapshots</li>
+            <li><span class="tick">✓</span> Priority Exception Reporting</li>
+            <li style="color: var(--text-dim); font-style: italic;">Valuation Package not included</li>
+          </ul>
+
+          <div class="cta-wide">
+            <a href="#" class="btn-outline">Contact Sales</a>
           </div>
         </div>
 
         <div class="pricing-card">
           <div class="price nums">$8,500 <span>/mo</span></div>
           <div class="pricing-title">Enterprise Underwriting</div>
-          <div class="pricing-sub">For funds running regular bid cycles requiring repeatable diligence packages and historical benchmarking.</div>
+          <div class="pricing-sub">Full-stack underwriting for funds running regular bid cycles requiring repeatable diligence packages.</div>
 
           <ul class="bullets">
-            <li><span class="tick">✓</span> Unlimited Portfolio Uploads</li>
+            <li><span class="tick">✓</span> Everything in Data Subscription</li>
+            <li><span class="tick">✓</span> Full Valuation Package (NPV, Sensitivity)</li>
             <li><span class="tick">✓</span> Multi-user Access Control</li>
             <li><span class="tick">✓</span> Configurable Assumptions per Tape</li>
-            <li><span class="tick">✓</span> Priority Exception Reporting</li>
             <li><span class="tick">✓</span> Dedicated Analyst Support</li>
           </ul>
 
@@ -851,7 +974,7 @@
       <div class="section-header">
         <h2>Capabilities Matrix</h2>
         <p class="subtitle">
-          We prioritize cashflow reality to drive valuation.
+          Clear feature availability across all pricing tiers.
         </p>
       </div>
 
@@ -860,66 +983,103 @@
           <table>
             <thead>
               <tr>
-                <th style="width:50%;">Capability</th>
-                <th style="text-align:center; width:25%;">Included</th>
-                <th style="text-align:left; width:25%;">Notes</th>
+                <th style="width:40%;">Capability</th>
+                <th class="tier-col">Pilot<br><span style="font-weight: 400; font-size: 0.65rem;">$500</span></th>
+                <th class="tier-col">Data Sub<br><span style="font-weight: 400; font-size: 0.65rem;">$5K/mo</span></th>
+                <th class="tier-col">Enterprise<br><span style="font-weight: 400; font-size: 0.65rem;">$8.5K/mo</span></th>
               </tr>
             </thead>
             <tbody>
-              <tr class="category-row"><td colspan="3">Core Data Outputs</td></tr>
+              <tr class="category-row"><td colspan="4">Core Data Outputs</td></tr>
               <tr>
                 <td>Trustee Disbursement Ledger</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Full history, transaction types, class codes</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
                 <td>Claims & Waterfall Snapshot</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">P/S/U classification</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
                 <td>Case Details Snapshot</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Status + Trustee + Last Activity</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
 
-              <tr class="category-row"><td colspan="3">Underwriting & Forecasting</td></tr>
+              <tr class="category-row"><td colspan="4">Valuation & Forecasting</td></tr>
               <tr>
                 <td>Trustee-Derived Payment Series</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Normalized monthly time series</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
-                <td>Time-Decay Weighting</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Recent behavior drives yield curve</td>
+                <td>Time-Decay Weighting Model</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
-                <td>Priority Waterfall Logic</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Admin → Secured → Unsecured</td>
+                <td>Priority Waterfall Allocation</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
-                <td>Gap Analysis</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Detects "Going Dark" / Broken Promises</td>
-              </tr>
-
-              <tr class="category-row"><td colspan="3">Valuation Outputs</td></tr>
-              <tr>
-                <td>NPV Scenarios</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Discount Rate Configurable</td>
+                <td>NPV Scenarios (Base + Stressed)</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
                 <td>Dismissal Sensitivity Grid</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Survival-adjusted cashflows</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+              </tr>
+
+              <tr class="category-row"><td colspan="4">Risk & Exception Analysis</td></tr>
+              <tr>
+                <td>Seller Discrepancy Flags (Plan vs. Actual)</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
               <tr>
-                <td>Seller Discrepancy Flags</td>
-                <td style="text-align:center" class="check">●</td>
-                <td class="dim">Plan vs. Actual variance</td>
+                <td>Gap Analysis (Going Dark Detection)</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+              </tr>
+
+              <tr class="category-row"><td colspan="4">Platform & Support</td></tr>
+              <tr>
+                <td>Portfolio Upload Limit</td>
+                <td class="tier-col" style="font-family: 'JetBrains Mono'; font-size: 0.8rem;">1 tape</td>
+                <td class="tier-col" style="font-family: 'JetBrains Mono'; font-size: 0.8rem;">Unlimited</td>
+                <td class="tier-col" style="font-family: 'JetBrains Mono'; font-size: 0.8rem;">Unlimited</td>
+              </tr>
+              <tr>
+                <td>Multi-user Access</td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+              </tr>
+              <tr>
+                <td>Configurable Assumptions (Discount Rate, etc.)</td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+              </tr>
+              <tr>
+                <td>Dedicated Analyst Support</td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot excluded"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
               </tr>
             </tbody>
           </table>
