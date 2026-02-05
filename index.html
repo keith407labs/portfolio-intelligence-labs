@@ -555,39 +555,46 @@
         </div>
 
         <div class="hero-card">
-          <div class="hero-card-header">
-            <div class="hero-card-title">The 60-Second Deal Screen</div>
-            <div class="pill">Preview</div>
-          </div>
-          <div class="hero-card-body">
-            <p>Risk factors identified before you model:</p>
-            <div class="mono-block">• Trustee Payment Velocity (Decay-Weighted)
-• Priority Waterfall Logic (Secured → Unsecured)
-• Gap Analysis (Payment Interruption Flags)
-• Yield Scenarios (Base vs. Dismissal Shock)
-• Normalized SQL-Ready Ingestion Files</div>
-
-            <div class="mini-row">
-              <div class="mini">
-                <div class="k">Base Case NPV</div>
-                <div class="v nums">$—</div>
-                <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Curve-fitted to recent velocity</div>
+            <div class="hero-card-header">
+              <div class="hero-card-title">Deal Screen: <span style="color:var(--text-muted); font-weight:400; text-transform:none;">Sample Tape #402</span></div>
+              <div class="pill">Live Preview</div>
+            </div>
+            
+            <div class="hero-card-body">
+              <p style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); margin-bottom:0.8rem; font-weight:700;">Risk Factors Detected</p>
+              
+              <div class="mono-block" style="font-size:0.75rem; line-height:1.7;">
+                <div><span style="color:var(--check-green);">✓</span> <strong>Decay-Weighted Velocity:</strong> 6mo Half-life applied</div>
+                <div><span style="color:var(--check-green);">✓</span> <strong>Waterfall:</strong> 14% Secured / 86% Unsecured</div>
+                <div><span style="color:var(--amber);">!</span> <strong>Gap Analysis:</strong> 42 accounts > 60 days inactive</div>
+                <div><span style="color:var(--brand-glow);">i</span> <strong>Format:</strong> SQL-ready ledgers generated</div>
               </div>
-              <div class="mini">
-                <div class="k">Dismissal Shock</div>
-                <div class="v nums">$—</div>
-                <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Sensitivity at 15% hazard</div>
+          
+              <div class="mini-row">
+                <div class="mini">
+                  <div class="k">Base Case NPV (18%)</div>
+                  <div class="v nums" style="color:var(--text-main);">$4,215,800</div>
+                  <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">
+                    <span style="color:var(--check-green);">●</span> Current Trend
+                  </div>
+                </div>
+                
+                <div class="mini" style="border-color:rgba(239,68,68,0.25); background:rgba(239,68,68,0.03);">
+                  <div class="k" style="color:var(--red);">Dismissal Shock (15%)</div>
+                  <div class="v nums" style="color:var(--text-main);">$3,105,240</div>
+                  <div class="dim" style="font-size:0.75rem;margin-top:0.35rem; display:flex; align-items:center; gap:0.4rem;">
+                    <span style="color:var(--red); font-weight:700; background:rgba(239,68,68,0.1); padding:0 4px; border-radius:3px;">-26.3%</span>
+                     Impact
+                  </div>
+                </div>
+              </div>
+          
+              <div class="tag-row" style="margin-top:1rem;">
+                <span class="tag" style="border-color:var(--border);">ID: 2,401 Accounts</span>
+                <span class="tag" style="border-color:var(--border);">Face: $10.5M</span>
               </div>
             </div>
-
-            <div class="tag-row">
-              <span class="tag blue">decay-curve</span>
-              <span class="tag violet">waterfall logic</span>
-              <span class="tag green">risk-adj yield</span>
-              <span class="tag amber">gap analysis</span>
-            </div>
           </div>
-        </div>
       </div>
     </div>
   </section>
