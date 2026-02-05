@@ -277,10 +277,15 @@
 
     /* --- DEAL SCREEN --- */
     .deal-screen-wrap {
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(3,7,18,0.50);
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Lighter, crisper border */
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* Highlight on top */
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.60); /* More transparency */
+    backdrop-filter: blur(12px);         /* The Glass Effect */
+    box-shadow: 
+        0 0 0 1px rgba(0,0,0,0.2), 
+        0 20px 50px -10px rgba(0, 0, 0, 0.7); /* Deep, expensive shadow */
     }
     .deal-screen-header {
       padding: 1.2rem 1.5rem;
@@ -296,6 +301,26 @@
       font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 0.3px;
+    }
+
+    /* Update .comparison-wrapper to handle positioning */
+    .comparison-wrapper {
+        position: relative; /* Needed for the shadow overlay */
+        border: 1px solid rgba(148,163,184,0.18);
+        border-radius: 12px;
+        background: rgba(15,23,42,0.75);
+        overflow: hidden;
+    }
+
+    /* Add this Pseudo-element to create the fade on the right */
+    .comparison-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0;
+        width: 40px;
+        background: linear-gradient(to right, transparent, rgba(15,23,42,0.9));
+        pointer-events: none; /* Let clicks pass through */
+        z-index: 10;
     }
 
     /* Portfolio Overview Cards */
@@ -408,18 +433,19 @@
 
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .card {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 12px;
-      padding: 1.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: 0.25s ease;
+    background: rgba(15, 23, 42, 0.4); /* Start slightly more transparent */
+    border: 1px solid rgba(148,163,184,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth physics */
     }
     .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(96,165,250,0.35);
-      box-shadow: 0 24px 54px -35px rgba(0,0,0,0.75);
+    transform: translateY(-4px);
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(96,165,250,0.5); /* Brand Blue border on hover */
+    box-shadow: 
+        0 0 0 1px rgba(96,165,250,0.1), /* Inner glow ring */
+        0 20px 40px -15px rgba(0,0,0,0.7);
     }
     .card h3 {
       font-size: 1.05rem;
@@ -861,6 +887,7 @@
       <section id="how">
     <div class="container">
       <div class="section-header">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Methodology</div>
         <h2>From Bid Tape to Alpha</h2>
         <p class="subtitle">
           Uncover the delta between the confirmed plan and live Trustee disbursements to prevent overbidding.
@@ -1243,9 +1270,7 @@
       <div class="card" style="text-align:center; padding:3rem 2rem;">
         <h3 style="font-size:1.5rem; margin-bottom:1rem;">Validate Your Next Deal Before You Bid</h3>
         <p style="max-width:70ch;margin:0 auto 2rem;" class="muted">
-          <strong style="color: var(--text-main);">See the valuation gap</strong> 
-          between seller pricing and trustee-backed reality. Upload your bid tape. We'll show you what 
-          you're really buying—in 24 hours.
+          See the valuation gap between seller pricing and trustee-backed reality. Upload your bid tape. We'll show you what you're really buying—in 24 hours.
         </p>
         <div class="hero-cta-row" style="justify-content:center; margin-bottom:0;">
           <a href="#pricing" class="btn-primary">Start Pilot Validation ($500)</a>
