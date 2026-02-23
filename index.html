@@ -52,6 +52,61 @@
     .muted { color: var(--text-muted); }
     .dim { color: var(--text-dim); }
 
+    /* --- ROI SECTION --- */
+    .roi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    /* --- PILOT SECTION --- */
+    .pilot-card {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(to bottom, rgba(15,23,42,0.8), rgba(16,27,51,0.8));
+      border-color: rgba(59,130,246,0.45);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.12);
+    }
+
+    .pilot-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .pilot-price {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .pilot-price span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .pilot-checklist {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .pilot-check-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
     /* --- NEON CHROME BACKGROUND --- */
     .neon-bg-container {
       position: fixed;
@@ -748,6 +803,7 @@
       .io-col + .io-col { border-left: none; border-top: 1px solid rgba(148,163,184,0.14); }
       .grid-3 { grid-template-columns: 1fr; }
       .pricing-wrap { grid-template-columns: 1fr; }
+      .roi-grid { grid-template-columns: 1fr; gap: 2rem; }
       
       /* Scale down Portfolio Overview on tablets */
       .portfolio-overview { grid-template-columns: repeat(3, 1fr); }
@@ -764,6 +820,10 @@
       .container { padding: 0 1.5rem; }
       .pricing-card { padding: 1.5rem; }
       .io-col { padding: 1.25rem; }
+      .pilot-card { padding: 2.5rem 1.5rem; }
+      .pilot-title { font-size: 2rem; }
+      .pilot-price { font-size: 2.2rem; }
+      .pilot-checklist { flex-direction: column; align-items: center; gap: 1rem; }
       
       /* Stack Portfolio Overview on phones */
       .portfolio-overview { grid-template-columns: 1fr; }
@@ -1146,7 +1206,7 @@
       <p class="subtitle">A single "ghost claim" can wipe out the margin of ten performing ones. We calculate the mathematical distance between the seller's tape and the trustee's reality.</p>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+    <div class="roi-grid">
       <div>
         <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Catching the "Margin Killers"</h3>
         <ul class="bullets" style="gap: 1.2rem;">
@@ -1278,38 +1338,38 @@
 </section>
 
   <section id="pilot" style="padding: 6rem 0;">
-    <div class="container">
-      <div class="card" style="text-align:center; padding:4rem 2rem; background: linear-gradient(to bottom, rgba(15,23,42,0.8), rgba(16,27,51,0.8)); border-color: rgba(59,130,246,0.45); box-shadow: 0 0 50px rgba(59, 130, 246, 0.12);">
-        <div class="pill" style="display:inline-block; margin-bottom:1.5rem;">Risk-Free Entry</div>
-        
-        <h2 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; color: var(--text-main);">The Pilot Run</h2>
-        
-        <div class="price nums" style="font-size: 2.8rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-main);">
-          $500 <span style="font-size: 1rem; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; letter-spacing: 0;">/ flat rate</span>
+  <div class="container">
+    <div class="card pilot-card">
+      <div class="pill" style="display:inline-block; margin-bottom:1.5rem;">Risk-Free Entry</div>
+      
+      <h2 class="pilot-title">The Pilot Run</h2>
+      
+      <div class="price nums pilot-price">
+        $500 <span>/ flat rate</span>
+      </div>
+
+      <p style="max-width:70ch;margin:0 auto 2.5rem; font-size: 1.1rem; line-height: 1.7;" class="muted">
+        Send us your next tape. We'll run the entire portfolio against trustee-verified payment data and hand you the top 100 most dangerous discrepancies. <strong>If PVL doesn't change your bid, you've lost $500. If it does, you just saved multiples of that.</strong>
+      </p>
+
+      <div class="pilot-checklist">
+        <div class="pilot-check-item">
+          <span class="tick" style="margin-top:0;">✓</span> <strong>Full Tape Scored in 24-48 Hrs</strong>
         </div>
-
-        <p style="max-width:70ch;margin:0 auto 2.5rem; font-size: 1.1rem; line-height: 1.7;" class="muted">
-          Send us your next tape. We'll run the entire portfolio against trustee-verified payment data and hand you the top 100 most dangerous discrepancies. <strong>If PVL doesn't change your bid, you've lost $500. If it does, you just saved multiples of that.</strong>
-        </p>
-
-        <div style="display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 3rem;">
-          <div style="display: flex; gap: 0.75rem; align-items: center; color: var(--text-main); font-size: 0.95rem;">
-            <span class="tick" style="margin-top:0;">✓</span> <strong>Full Tape Scored in 24-48 Hrs</strong>
-          </div>
-          <div style="display: flex; gap: 0.75rem; align-items: center; color: var(--text-main); font-size: 0.95rem;">
-            <span class="tick" style="margin-top:0;">✓</span> <strong>Top 100 Discrepancy Report</strong>
-          </div>
-          <div style="display: flex; gap: 0.75rem; align-items: center; color: var(--text-main); font-size: 0.95rem;">
-            <span class="tick" style="margin-top:0;">✓</span> <strong>Completion Odds per Claim</strong>
-          </div>
+        <div class="pilot-check-item">
+          <span class="tick" style="margin-top:0;">✓</span> <strong>Top 100 Discrepancy Report</strong>
         </div>
-
-        <div class="hero-cta-row" style="justify-content:center; margin-bottom:0;">
-          <a href="#" class="btn-primary" style="padding: 0.85rem 2.5rem; font-size: 1.05rem;">Start Your Pilot</a>
+        <div class="pilot-check-item">
+          <span class="tick" style="margin-top:0;">✓</span> <strong>Completion Odds per Claim</strong>
         </div>
       </div>
+
+      <div class="hero-cta-row" style="justify-content:center; margin-bottom:0;">
+        <a href="#" class="btn-primary" style="padding: 0.85rem 2.5rem; font-size: 1.05rem;">Start Your Pilot</a>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <footer>
     <div class="container">
