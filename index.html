@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio Valuation Lab | Premium Underwriting for Chapter 13 Debt Portfolios</title>
-  <meta name="description" content="Premium underwriting for debt portfolios of Chapter 13 assets. PVL runs 10,000+ simulations per claim to deliver predictive default modeling, real-world cashflow distributions, and P50/P90 valuations." />
+  <meta name="description" content="Premium underwriting for Chapter 13 debt portfolios. PVL stress-tests every claim against real-time economic conditions, trustee behavior, and 10,000+ simulated outcomes to deliver P50/P90 valuations institutional buyers can defend." />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 12a10.06 10.06 0 0 0-20 0Z'/><path d='M12 12v8a2 2 0 0 0 2 2H22'/><path d='M12 2v1'/></svg>">
 
@@ -273,7 +273,7 @@
     .portfolio-overview {
       padding: 1.5rem;
       display: grid;
-      grid-template-columns: repeat(5, 1fr); 
+      grid-template-columns: repeat(6, 1fr);
       gap: 1rem;
       background: rgba(15,23,42,0.3);
       border-bottom: 1px solid rgba(148,163,184,0.14);
@@ -813,7 +813,7 @@
           <h1>Portfolio Pricing<br><span>for Chapter 13 Accounts.</span></h1>
           
           <p style="margin-left: auto; margin-right: auto; line-height: 1.8; max-width: 65ch; margin-bottom: 2.5rem; font-size: 1.1rem; color: var(--text-muted); font-weight: 350;">
-            PVL calculates the true odds of repayment by stress-testing every claim across 10,000+ simulated outcomes. We combine trustee-verified cashflows and predictive default modeling to uncover the hidden dismissal risks, and erratic payment histories — <strong>giving your fund a measurable edge on every bid.</strong>
+            PVL stress-tests every claim against real-time economic conditions, trustee behavior, and 10,000+ simulated outcomes. We don't just reconcile the tape — we model how your portfolio performs when unemployment rises, payments slip, and plans fall apart. <strong>So you bid on what's likely, not what's promised.</strong>
           </p>
 
           <div class="hero-cta-row">
@@ -877,6 +877,11 @@
             <div class="value nums" style="color: var(--red);">387</div>
             <div class="subtext">16% of portfolio</div>
           </div>
+          <div class="overview-card" style="border-color: rgba(245,158,11,0.25);">
+            <div class="label">Macro Regime</div>
+            <div class="value" style="font-size: 1.1rem; color: var(--amber);">Elevated Stress</div>
+            <div class="subtext">TX, GA unemployment ↑</div>
+          </div>
         </div>
 
         <div class="account-table-wrap">
@@ -896,7 +901,10 @@
               <tr>
                 <td class="account-id">ATLN-2211324</td>
                 <td><span class="status-badge active">Active — Current</span></td>
-                <td><span class="pvl-badge critical">85% Dismissal Prob.</span></td>
+                <td>
+                  <span class="pvl-badge critical">85% Dismissal Prob.</span>
+                  <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem;">2 motions + macro stress (GA)</div>
+                </td>
                 <td class="nums">$4,280</td>
                 <td class="nums">$1,140</td>
                 <td class="nums" style="color: var(--text-dim);">$420</td>
@@ -905,7 +913,10 @@
               <tr>
                 <td class="account-id">DALL-219237</td>
                 <td><span class="status-badge active">Active — Performing</span></td>
-                <td><span class="pvl-badge critical">97% Dismissal Prob.</span></td>
+                <td>
+                  <span class="pvl-badge critical">97% Dismissal Prob.</span>
+                  <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem;">0 payments in 14mo, pro-se</div>
+                </td>
                 <td class="nums">$4,920</td>
                 <td class="nums">$0</td>
                 <td class="nums" style="color: var(--text-dim);">$0</td>
@@ -914,7 +925,10 @@
               <tr>
                 <td class="account-id">ALBQ-2310446</td>
                 <td><span class="status-badge active">Active — Current</span></td>
-                <td><span class="pvl-badge at-risk">High Variance Risk</span></td>
+                <td>
+                  <span class="pvl-badge at-risk">High Variance Risk</span>
+                  <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem;">Cramdown filed, erratic payer</div>
+                </td>
                 <td class="nums">$3,580</td>
                 <td class="nums">$890</td>
                 <td class="nums" style="color: var(--text-dim);">$310</td>
@@ -923,7 +937,10 @@
               <tr>
                 <td class="account-id">HOUS-247452</td>
                 <td><span class="status-badge active">Active — Current</span></td>
-                <td><span class="pvl-badge critical">Tail Risk — Wipeout</span></td>
+                <td>
+                  <span class="pvl-badge critical">Tail Risk — Wipeout</span>
+                  <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem;">Relief from stay + TX unemp ↑</div>
+                </td>
                 <td class="nums">$2,885</td>
                 <td class="nums">$310</td>
                 <td class="nums" style="color: var(--text-dim);">$0</td>
@@ -932,7 +949,10 @@
               <tr>
                 <td class="account-id">PHOE-1847532</td>
                 <td><span class="status-badge active">Active — Current</span></td>
-                <td><span class="pvl-badge on-track">92% Completion Prob.</span></td>
+                <td>
+                  <span class="pvl-badge on-track">92% Completion Prob.</span>
+                  <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem;">Wage order active, AZ stable</div>
+                </td>
                 <td class="nums">$2,730</td>
                 <td class="nums">$2,920</td>
                 <td class="nums" style="color: var(--text-dim);">$2,610</td>
@@ -941,7 +961,10 @@
               <tr>
                 <td class="account-id">SEAW-2401965</td>
                 <td><span class="status-badge active">Active — Current</span></td>
-                <td><span class="pvl-badge on-track">88% Completion Prob.</span></td>
+                <td>
+                  <span class="pvl-badge on-track">88% Completion Prob.</span>
+                  <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem;">On track, WA macro favorable</div>
+                </td>
                 <td class="nums">$2,140</td>
                 <td class="nums">$2,340</td>
                 <td class="nums" style="color: var(--text-dim);">$1,980</td>
@@ -957,41 +980,74 @@
   <section id="how" style="border-top: 1px solid rgba(148,163,184,0.1);">
     <div class="container">
       <div class="section-header">
-        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Why Sellers' Numbers Are Wrong</div>
-        <h2>Static Models Miss What Predictive Analysis Finds</h2>
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Three Layers of Analysis</div>
+        <h2>How the Valuation Engine Works</h2>
         <p class="subtitle">
-          Sellers project straight-line recoveries from 60-month plans. We model the chaos — simulating thousands of scenarios per claim to surface the risks that deterministic spreadsheets can't see.
+          Most underwriting stops at the tape. Ours starts there, then layers forward-looking projections and live economic stress on top — so you're bidding on how a portfolio is <em>likely to behave</em>, not just how it looks today.
         </p>
       </div>
 
       <div class="grid-3">
         <div class="card">
-          <div class="mono" style="color: var(--brand-glow); font-size: 0.7rem; margin-bottom: 1rem;">[ 01 ]</div>
-          <h3>Stress-Testing Every Claim</h3>
-          <p>Sellers use a single "Active" status to project a perfect stream of revenue. We know the real world is messier. By <strong>simulating thousands of potential outcomes for each claim</strong>—factoring in local trustee behavior and debtor history—we expose the hidden downside risks that static spreadsheets miss.</p>
+          <div class="mono" style="color: var(--brand-glow); font-size: 0.7rem; margin-bottom: 1rem;">[ Layer 1 ] Ground Truth</div>
+          <h3>What's Actually Happening Today</h3>
+          <p>We start with <strong>trustee disbursement ledgers</strong> — not plan text or seller tapes. Line-by-line payment history for every claim, weighted by recency. We reconcile what the seller says vs. what the trustee actually paid, flag silent defaults, catch erratic payers, and identify claims where payments stopped months ago but the tape still says "Active."</p>
           <div class="tag-row">
-            <span class="tag blue">Predictive Modeling</span>
-            <span class="tag blue">Risk Profiling</span>
+            <span class="tag blue">Trustee Ledger Reconciliation</span>
+            <span class="tag blue">Silent Default Detection</span>
           </div>
         </div>
 
         <div class="card">
-          <div class="mono" style="color: var(--violet); font-size: 0.7rem; margin-bottom: 1rem;">[ 02 ]</div>
-          <h3>Real-World Repayment Odds</h3>
-          <p>A standard waterfall only tells you the <em>order</em> of payment. We calculate the <strong>actual probability</strong> that you'll get paid. We don't just give you a single theoretical NPV; we deliver a realistic range of returns (P50 vs. P90) so you can bid based on your fund's exact risk appetite.</p>
+          <div class="mono" style="color: var(--violet); font-size: 0.7rem; margin-bottom: 1rem;">[ Layer 2 ] Forward Projection</div>
+          <h3>What's Likely to Happen Next</h3>
+          <p>Every claim runs through <strong>empirically-calibrated survival curves</strong> with 8 distinct hazard stages — from the document-drop cliff in month 1 through confirmation risk, payment fatigue, and major life events. We layer in docket intelligence: dismissal motions, relief-from-stay filings, cramdowns, and plan amendments. We also model <strong>expected claim dilution</strong> from filings that haven't hit the docket yet but will before bar date closes.</p>
           <div class="tag-row">
-            <span class="tag violet">Probability Scoring</span>
-            <span class="tag violet">P50 / P90 Forecasts</span>
+            <span class="tag violet">8-Stage Survival Curves</span>
+            <span class="tag violet">Docket Intelligence</span>
+            <span class="tag violet">Bar Date Dilution</span>
           </div>
         </div>
 
         <div class="card">
-          <div class="mono" style="color: var(--check-green); font-size: 0.7rem; margin-bottom: 1rem;">[ 03 ]</div>
-          <h3>Catching "Silent Defaults"</h3>
-          <p>An account can be technically "Active" on a tape for months after payments actually stop. We track <strong>real-time payment drop-offs</strong> against plan obligations. If a debtor's trajectory signals a likely dismissal, we flag it before you pay full price for a ghost claim.</p>
+          <div class="mono" style="color: var(--check-green); font-size: 0.7rem; margin-bottom: 1rem;">[ Layer 3 ] Economic Stress</div>
+          <h3>What Happens When Conditions Change</h3>
+          <p>Your portfolio doesn't exist in a vacuum. We pull <strong>8 live economic signals</strong> — state-level unemployment, household debt service, rent and food costs, fuel prices, credit card delinquency, and bottom-quartile wages — to model how macro shifts affect dismissal rates at the state level. Rising unemployment in Texas hits your Houston claims differently than falling gas prices help your Phoenix ones.</p>
           <div class="tag-row">
-            <span class="tag green">Early Warning Flags</span>
-            <span class="tag green">Loss Mitigation</span>
+            <span class="tag green">8 Economic Signals</span>
+            <span class="tag green">State-Level Stress</span>
+            <span class="tag green">Regime Detection</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it comes together -->
+      <div class="card" style="margin-top: 2rem; background: var(--bg-surface-2); border-left: 4px solid var(--brand-glow); padding: 2rem;">
+        <div class="mono" style="font-size: 0.85rem; color: var(--brand-glow); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">
+          // How the Three Layers Combine
+        </div>
+        <div class="roi-grid" style="gap: 2rem;">
+          <div>
+            <p class="muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem;">
+              All three layers feed into every Monte Carlo iteration. Each of the 10,000+ simulations draws different economic shocks, different payment paths, and different docket outcomes — producing a <strong style="color: var(--text-main);">distribution of portfolio values</strong>, not a single number.
+            </p>
+            <p class="muted" style="font-size: 0.95rem; line-height: 1.7;">
+              Your IC doesn't get a point estimate. They get a P50 (median outcome), a P90 (downside floor), and a VaR (what you lose in the worst 5% of scenarios) — so the bid reflects your fund's risk appetite, not guesswork.
+            </p>
+          </div>
+          <div style="display: grid; gap: 0.75rem;">
+            <div style="border: 1px solid rgba(148,163,184,0.14); border-radius: 8px; padding: 0.85rem 1rem; background: rgba(3,7,18,0.45); display: flex; justify-content: space-between; align-items: center;">
+              <span class="muted" style="font-size: 0.9rem;">Conservative Bid (P10)</span>
+              <span class="mono" style="color: var(--check-green); font-weight: 700;">Floor — protect capital</span>
+            </div>
+            <div style="border: 1px solid rgba(59,130,246,0.35); border-radius: 8px; padding: 0.85rem 1rem; background: rgba(59,130,246,0.06); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.9rem; color: var(--text-main); font-weight: 600;">Fair Value Bid (P50)</span>
+              <span class="mono" style="color: var(--brand-glow); font-weight: 700;">Median outcome</span>
+            </div>
+            <div style="border: 1px solid rgba(148,163,184,0.14); border-radius: 8px; padding: 0.85rem 1rem; background: rgba(3,7,18,0.45); display: flex; justify-content: space-between; align-items: center;">
+              <span class="muted" style="font-size: 0.9rem;">Aggressive Bid (Mean)</span>
+              <span class="mono" style="color: var(--amber); font-weight: 700;">Upside-weighted</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1029,8 +1085,8 @@
                   <div class="name">Valuation Config</div>
                   <div class="type">Parameters</div>
                 </div>
-                <div class="desc">Set your own assumptions. We run predictive sensitivity analysis across your parameters.</div>
-                <div class="fields">Discount rate • Custom default curves • Payment decay sensitivity • Target return thresholds</div>
+                <div class="desc">Set your own assumptions. We run sensitivity across discount rates, dismissal scenarios, and economic stress levels.</div>
+                <div class="fields">Discount rate grid • Target hurdle rate • Dismissal rate scenarios • Servicing cost assumptions</div>
               </li>
             </ul>
           </div>
@@ -1059,11 +1115,27 @@
               </li>
               <li class="io-item">
                 <div class="top">
+                  <div class="name">Survival & Risk Profiles</div>
+                  <div class="type mono">survival_profiles.csv</div>
+                </div>
+                <div class="desc">Per-case survival curves, docket risk scores, and macro stress multipliers — the inputs behind every probability we assign.</div>
+                <div class="fields">Hazard stage • Docket multiplier • Macro multiplier • District calibration • Composite survival</div>
+              </li>
+              <li class="io-item">
+                <div class="top">
+                  <div class="name">Economic Stress Report</div>
+                  <div class="type mono">macro_profiles.csv</div>
+                </div>
+                <div class="desc">State-level economic context for every case. Shows which macro signals are driving risk up or down and whether conditions are deteriorating.</div>
+                <div class="fields">State unemployment • Debt service ratio • Rent/food/fuel CPI • CC delinquency • Stress regime flag</div>
+              </li>
+              <li class="io-item">
+                <div class="top">
                   <div class="name">Valuation Package</div>
                   <div class="type">Tables (CSV)</div>
                 </div>
-                <div class="desc">The numbers you hand to your IC. Probability-derived cashflow distributions, P50/P90 NPV by claim, tail risk flags, and every seller discrepancy documented.</div>
-                <div class="fields">P50/P90 cashflows • EV by case • Tail risk flags • <strong style="color:var(--brand-glow)">Discrepancy Report</strong></div>
+                <div class="desc">The numbers you hand to your IC. Monte Carlo distributions (P10/P50/P90), VaR/CVaR risk metrics, bid guidance at three confidence levels, and every seller discrepancy documented.</div>
+                <div class="fields">P10/P50/P90 NPV • VaR (95th/99th) • Bid guidance • <strong style="color:var(--brand-glow)">Discrepancy Report</strong></div>
               </li>
             </ul>
           </div>
@@ -1078,7 +1150,7 @@
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Full Transparency</div>
         <h2>Every Number Is Auditable</h2>
         <p class="subtitle">
-          No black boxes. You get the raw trustee data, the model outputs, and the discrepancy flags — everything your IC needs to sign off on the bid.
+          No black boxes. You get the raw trustee data, the survival curves, the economic signals, and the Monte Carlo distributions — everything your IC needs to sign off on the bid.
         </p>
       </div>
 
@@ -1093,22 +1165,22 @@
             <div class="kv">
               <div class="k">Accounts</div>
               <div class="v nums">2,000</div>
-              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Sample Portfolio</div>
+              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Across 12 states</div>
             </div>
             <div class="kv">
-              <div class="k">Discount Rate</div>
-              <div class="v nums">18%</div>
-              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Configurable</div>
+              <div class="k">Simulations</div>
+              <div class="v nums">10K</div>
+              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Monte Carlo iterations</div>
             </div>
             <div class="kv">
-              <div class="k">Dismissal Hazard</div>
-              <div class="v nums">10%</div>
-              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Annualized</div>
+              <div class="k">Macro Regime</div>
+              <div class="v" style="font-size: 1rem; color: var(--amber);">Elevated</div>
+              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">3 states stressed</div>
             </div>
             <div class="kv">
-              <div class="k">Payment Decay</div>
-              <div class="v nums">6 mo</div>
-              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Weighted Avg</div>
+              <div class="k">Portfolio VaR (95%)</div>
+              <div class="v nums">$3.1M</div>
+              <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Downside floor</div>
             </div>
           </div>
 
@@ -1119,14 +1191,14 @@
               <div class="meta">Join keys: NDC_Case_ID • NDC_Claim_ID</div>
             </div>
             <div class="file">
-              <div class="fn">claims.csv</div>
-              <div class="fd">Where each claim sits in the priority stack and what's left after senior claims.</div>
-              <div class="meta">Join keys: NDC_Case_ID • NDC_Claim_ID</div>
+              <div class="fn">survival_profiles.csv</div>
+              <div class="fd">Per-case survival curves with docket, macro, and district multipliers baked in.</div>
+              <div class="meta">Join keys: NDC_Case_ID</div>
             </div>
             <div class="file">
-              <div class="fn">risk_flags.csv</div>
-              <div class="fd">Every red flag: stopped payments, missing claims, silent defaults.</div>
-              <div class="meta">Join keys: NDC_Case_ID</div>
+              <div class="fn">macro_profiles.csv</div>
+              <div class="fd">State-level economic signals, z-scores, momentum, and stress regime flags.</div>
+              <div class="meta">Join keys: NDC_Case_ID • State</div>
             </div>
           </div>
 
@@ -1136,8 +1208,8 @@
             </div>
             <div class="mono" style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;">
               • Case 24-12345: Plan shows $285/mo, trustee ledger avg $142/mo (6mo)<br>
-              • Case 24-54321: Unsecured claim listed @ $8,400 — no disbursements in 14 months<br>
-              • Case 24-99999: Secured claim paid in full, unsecured recovery now viable
+              • Case 24-54321: TX unemployment ↑1.2% — dismissal probability jumped from 18% to 34%<br>
+              • Case 24-99999: 3 priority claims expected before bar date — unsecured recovery drops 40%
             </div>
           </div>
         </div>
@@ -1150,16 +1222,16 @@
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">The Economics of Accuracy</div>
         <h2>The Cost of Being Wrong</h2>
-        <p class="subtitle">A single "ghost claim" can wipe out the margin of ten performing ones. We calculate the mathematical distance between the seller's tape and the trustee's reality.</p>
+        <p class="subtitle">A single ghost claim wipes out the margin of ten performing ones. A macro shift you didn't model wipes out the portfolio. We quantify both.</p>
       </div>
 
       <div class="roi-grid">
         <div>
           <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Catching the "Margin Killers"</h3>
           <ul class="bullets" style="gap: 1.2rem;">
-            <li><span class="tick">✓</span> <strong>Ch 13 → 7 Conversions:</strong> We flag cases with high risk of early exit before they drain your payment pool.</li>
-            <li><span class="tick">✓</span> <strong>Erratic Payers:</strong> If a debtor misses 2 of the last 4 payments, your expected value shouldn't be 100%. We factor in real-world payment decay so you aren't overpaying for historically flaky accounts.</li>
-            <li><span class="tick">✓</span> <strong>The Waterfall Shift:</strong> We simulate how plan amendments months down the road will shift the priority stack, showing you exactly how junior claims will be impacted before you buy them.</li>
+            <li><span class="tick">✓</span> <strong>Silent Defaults & Conversions:</strong> We flag cases with high dismissal or Ch 7 conversion risk before they drain your payment pool — using docket signals, not just payment history.</li>
+            <li><span class="tick">✓</span> <strong>Macro-Driven Stress:</strong> If unemployment in Texas ticks up 2%, your Houston claims don't exist in a vacuum. We model how 8 economic signals propagate through dismissal rates at the state level.</li>
+            <li><span class="tick">✓</span> <strong>Pre-Bar Date Dilution:</strong> Claims that haven't been filed yet — especially government priority claims with a 180-day bar date — can dilute your unsecured position. We model expected future filings so your bid reflects the full claims universe, not just what's on the tape today.</li>
           </ul>
         </div>
         <div class="card" style="background: var(--bg-surface-2); border-left: 4px solid var(--brand-glow);">
@@ -1315,27 +1387,59 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="category-row"><td colspan="4">Standard in All Valuations</td></tr>
+              <tr class="category-row"><td colspan="4">Layer 1 — Ground Truth</td></tr>
               <tr>
-                <td>Monte Carlo Simulation (10,000+ iterations/claim)</td>
+                <td>Trustee Ledger Reconciliation (Actual vs. Tape)</td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col">—</td>
               </tr>
               <tr>
-                <td>Predictive Dismissal & Ch 7 Conversion Odds</td>
+                <td>Silent Default & Erratic Payer Detection</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col">—</td>
+              </tr>
+              <tr class="category-row"><td colspan="4">Layer 2 — Forward Projection</td></tr>
+              <tr>
+                <td>8-Stage Survival Curves (Standard, Short Plan, Mortgage)</td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col">—</td>
               </tr>
               <tr>
-                <td>Path-Dependent Waterfall Analysis (P50/P90)</td>
+                <td>Docket Intelligence (Dismissal Motions, Relief from Stay, Cramdowns)</td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col">—</td>
               </tr>
               <tr>
-                <td>Tail Risk Flags & Silent Default Detection</td>
+                <td>Pre-Bar Date Claim Dilution Modeling</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col">—</td>
+              </tr>
+              <tr class="category-row"><td colspan="4">Layer 3 — Economic Stress</td></tr>
+              <tr>
+                <td>State-Level Macro Overlay (8 FRED Signals)</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col">—</td>
+              </tr>
+              <tr>
+                <td>Correlated Economic Shocks in Monte Carlo</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col">—</td>
+              </tr>
+              <tr>
+                <td>VaR / CVaR Portfolio Risk Metrics</td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col"><span class="feature-dot included"></span></td>
+                <td class="tier-col">—</td>
+              </tr>
+              <tr>
+                <td>P10 / P50 / P90 Bid Guidance</td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col">—</td>
