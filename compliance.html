@@ -6,182 +6,16 @@
   <title>Compliance & Security | Portfolio Valuation Lab</title>
   <meta name="description" content="PVL's compliance and security practices — encryption, access controls, audit trails, and regulatory alignment for handling sensitive Chapter 13 bankruptcy data." />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 12a10.06 10.06 0 0 0-20 0Z'/><path d='M12 12v8a2 2 0 0 0 2 2H22'/><path d='M12 2v1'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C46849' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 12a10.06 10.06 0 0 0-20 0Z'/><path d='M12 12v8a2 2 0 0 0 2 2H22'/><path d='M12 2v1'/></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
 
   <style>
-    :root {
-      --bg-deep: #0B1120;
-      --bg-surface: #0f172a;
-      --bg-surface-2: #101b33;
-      --border: #334155;
-      --border-light: #475569;
-
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-
-      --brand-blue: #2563EB;
-      --brand-glow: #3B82F6;
-
-      --check-green: #10B981;
-      --amber: #F59E0B;
-      --red: #EF4444;
-      --violet: #A78BFA;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--text-main);
-      line-height: 1.6;
-      background-color: var(--bg-deep);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; position: relative; }
-    .muted { color: var(--text-muted); }
-    .dim { color: var(--text-dim); }
-
-    /* --- NEON CHROME BACKGROUND --- */
-    .neon-bg-container {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
-      background: var(--bg-deep);
-    }
-    .grid-overlay {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
-    }
-    .neon-glow-1 {
-      position: absolute;
-      left: 18%;
-      top: 18%;
-      height: 54rem;
-      width: 54rem;
-      transform: translate(-50%, -50%);
-      border-radius: 100%;
-      filter: blur(120px);
-      opacity: 0.12;
-      background: radial-gradient(circle, #3B82F6, transparent 70%);
-    }
-    .neon-glow-2 {
-      position: absolute;
-      right: 10%;
-      top: 62%;
-      height: 46rem;
-      width: 46rem;
-      transform: translate(20%, -50%);
-      border-radius: 100%;
-      filter: blur(110px);
-      opacity: 0.10;
-      background: radial-gradient(circle, #8B5CF6, transparent 70%);
-    }
-
-    /* --- NAV --- */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(11, 17, 32, 0.95);
-      backdrop-filter: blur(20px);
-      z-index: 1000;
-      padding: 1.15rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .nav-flex { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
-    .logo {
-      font-weight: 800;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-    }
-    .logo svg { stroke: var(--brand-glow); width: 22px; height: 22px; }
-
-    .pill {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(96,165,250,0.25);
-      background: rgba(59,130,246,0.10);
-      color: var(--brand-glow);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .nav-links { display: flex; gap: 1.6rem; align-items: center; }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: 0.2s;
-    }
-    .nav-links a:hover { color: var(--text-main); }
-    .nav-links a.active { color: var(--text-main); }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-main);
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    .btn-outline, .btn-primary {
-      padding: 0.65rem 1.25rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      white-space: nowrap;
-    }
-    .btn-outline {
-      border: 1px solid var(--border-light);
-      color: var(--text-main);
-      background: rgba(255,255,255,0.02);
-    }
-    .btn-outline:hover {
-      border-color: var(--brand-blue);
-      background: rgba(59, 130, 246, 0.10);
-      box-shadow: 0 0 0 4px rgba(59,130,246,0.06);
-    }
-    .btn-primary {
-      background: linear-gradient(to right, var(--brand-blue), #2563EB);
-      color: white;
-      border: 1px solid rgba(59,130,246,0.35);
-    }
-    .btn-primary:hover {
-      box-shadow: 0 0 24px rgba(59, 130, 246, 0.25);
-      transform: translateY(-1px);
-    }
-
-    /* --- PAGE HERO --- */
+    /* Compliance-specific styles */
     .page-hero {
       padding: 10rem 0 5rem;
       text-align: center;
@@ -195,7 +29,7 @@
       color: var(--text-main);
     }
     .page-hero h1 span {
-      background: linear-gradient(to right, #60A5FA, #A78BFA);
+      background: linear-gradient(to right, #D4785A, #E8A87C);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -208,41 +42,7 @@
       line-height: 1.8;
     }
 
-    /* --- SECTIONS --- */
-    section { padding: 5rem 0; }
-    .section-header { text-align: center; margin-bottom: 3.5rem; }
-    .section-header h2 {
-      font-size: 2.25rem;
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin-bottom: 0.8rem;
-      color: var(--text-main);
-    }
-    .subtitle { color: var(--text-muted); font-size: 1.05rem; max-width: 78ch; margin: 0 auto; }
-
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-
-    .card {
-      background: rgba(15, 23, 42, 0.4);
-      border: 1px solid rgba(148,163,184,0.1);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      background: rgba(15, 23, 42, 0.8);
-      border-color: rgba(96,165,250,0.5);
-      box-shadow: 0 0 0 1px rgba(96,165,250,0.1), 0 20px 40px -15px rgba(0,0,0,0.7);
-    }
-    .card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      margin-bottom: 0.5rem;
-    }
-    .card p { color: var(--text-muted); font-size: 0.95rem; }
 
     .card-icon {
       width: 44px;
@@ -252,8 +52,8 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 1rem;
-      border: 1px solid rgba(59,130,246,0.25);
-      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(196,104,73,0.25);
+      background: rgba(196,104,73,0.08);
       color: var(--brand-glow);
     }
     .card-icon.green {
@@ -262,8 +62,8 @@
       color: var(--check-green);
     }
     .card-icon.violet {
-      border-color: rgba(167,139,250,0.25);
-      background: rgba(167,139,250,0.08);
+      border-color: rgba(232,168,124,0.25);
+      background: rgba(232,168,124,0.08);
       color: var(--violet);
     }
     .card-icon.amber {
@@ -272,17 +72,16 @@
       color: var(--amber);
     }
 
-    /* --- DETAIL SECTIONS --- */
     .detail-block {
-      border: 1px solid rgba(148,163,184,0.18);
+      border: 1px solid rgba(168,162,158,0.18);
       border-radius: 16px;
       overflow: hidden;
-      background: rgba(15,23,42,0.40);
+      background: rgba(28,25,23,0.40);
       margin-bottom: 2rem;
     }
     .detail-header {
       padding: 1.5rem 2rem;
-      border-bottom: 1px solid rgba(148,163,184,0.14);
+      border-bottom: 1px solid rgba(168,162,158,0.14);
       background: rgba(255,255,255,0.02);
       display: flex;
       align-items: center;
@@ -316,26 +115,14 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
-    .tick {
-      width: 18px; height: 18px; border-radius: 4px;
-      background: rgba(16,185,129,0.12);
-      border: 1px solid rgba(16,185,129,0.28);
-      color: var(--check-green);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-weight: 900;
-      flex: 0 0 auto;
-      margin-top: 3px;
-      font-size: 0.75rem;
-    }
 
-    /* --- CTA BANNER --- */
     .cta-banner {
       text-align: center;
       padding: 4rem 2rem;
-      background: linear-gradient(to bottom, rgba(15,23,42,0.8), rgba(16,27,51,0.8));
-      border: 1px solid rgba(59,130,246,0.45);
+      background: linear-gradient(to bottom, rgba(28,25,23,0.8), rgba(41,37,36,0.8));
+      border: 1px solid rgba(196,104,73,0.45);
       border-radius: 12px;
-      box-shadow: 0 0 50px rgba(59, 130, 246, 0.12);
+      box-shadow: 0 0 50px rgba(196, 104, 73, 0.12);
     }
     .cta-banner h2 {
       font-size: 2rem;
@@ -351,40 +138,12 @@
       line-height: 1.7;
     }
 
-    /* --- FOOTER --- */
-    footer {
-      padding: 4rem 0;
-      text-align: center;
-      border-top: 1px solid rgba(148,163,184,0.14);
-      color: var(--text-dim);
-    }
-
-    /* --- RESPONSIVE --- */
     @media (max-width: 980px) {
-      .mobile-menu-btn { display: block; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(11, 17, 32, 0.98);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-        flex-direction: column;
-        padding: 1.5rem 2rem;
-        gap: 1.5rem;
-        align-items: flex-start;
-      }
-      .nav-links.active { display: flex; }
-      .grid-3 { grid-template-columns: 1fr; }
       .grid-2 { grid-template-columns: 1fr; }
     }
-
     @media (max-width: 600px) {
       .page-hero { padding-top: 8.5rem; }
       .page-hero h1 { font-size: 2.25rem; }
-      .container { padding: 0 1.5rem; }
       .detail-body { padding: 1.5rem; }
       .detail-header { padding: 1.25rem 1.5rem; }
     }
@@ -400,7 +159,7 @@
 
   <nav>
     <div class="container nav-flex">
-      <a href="index.html" class="logo">
+      <a href="index.html" class="logo" style="text-decoration:none;">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a10.06 10.06 0 0 0-20 0Z"/><path d="M12 12v8a2 2 0 0 0 2 2H22"/><path d="M12 2v1"/></svg>
         PVL
       </a>
@@ -412,8 +171,7 @@
       <div class="nav-links">
         <a href="index.html#how">How It Works</a>
         <a href="index.html#pricing">Pricing</a>
-        <a href="compliance.html" class="active">Compliance</a>
-        <a href="#" class="btn-outline">Client Login</a>
+        <a href="compliance.html" style="color: var(--text-main);">Compliance</a>
       </div>
     </div>
   </nav>
@@ -430,24 +188,12 @@
     </div>
   </section>
 
-  <div style="border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(15,23,42,0.3); padding: 2rem 0;">
-    <div class="container" style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; color: var(--text-dim); font-size: 0.9rem;">
-      <div style="display: inline-flex; gap: 0.5rem; align-items: center;">
-        <div style="width:6px;height:6px;border-radius:50%;background:var(--check-green);box-shadow:0 0 10px var(--check-green);"></div>
-        AES-256 Encryption at Rest
-      </div>
-      <div style="display: inline-flex; gap: 0.5rem; align-items: center;">
-        <div style="width:6px;height:6px;border-radius:50%;background:var(--check-green);box-shadow:0 0 10px var(--check-green);"></div>
-        TLS 1.3 in Transit
-      </div>
-      <div style="display: inline-flex; gap: 0.5rem; align-items: center;">
-        <div style="width:6px;height:6px;border-radius:50%;background:var(--check-green);box-shadow:0 0 10px var(--check-green);"></div>
-        SOC 2 Type II Aligned
-      </div>
-      <div style="display: inline-flex; gap: 0.5rem; align-items: center;">
-        <div style="width:6px;height:6px;border-radius:50%;background:var(--check-green);box-shadow:0 0 10px var(--check-green);"></div>
-        Role-Based Access Controls
-      </div>
+  <div style="border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(28,25,23,0.3); padding: 2rem 0;">
+    <div class="container trust-row">
+      <div class="trust-item"><div class="dot"></div> AES-256 Encryption at Rest</div>
+      <div class="trust-item"><div class="dot"></div> TLS 1.3 in Transit</div>
+      <div class="trust-item"><div class="dot"></div> SOC 2 Type II Aligned</div>
+      <div class="trust-item"><div class="dot"></div> Role-Based Access Controls</div>
     </div>
   </div>
 
@@ -489,7 +235,7 @@
   </section>
 
   <!-- Data Handling -->
-  <section id="data-handling" style="border-top: 1px solid rgba(148,163,184,0.1);">
+  <section id="data-handling" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Data Handling</div>
@@ -548,7 +294,7 @@
   </section>
 
   <!-- Regulatory Compliance -->
-  <section id="regulatory" style="border-top: 1px solid rgba(148,163,184,0.1); background: rgba(15,23,42,0.2);">
+  <section id="regulatory" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Regulatory Alignment</div>
@@ -593,7 +339,7 @@
   </section>
 
   <!-- Infrastructure -->
-  <section id="infrastructure" style="border-top: 1px solid rgba(148,163,184,0.1);">
+  <section id="infrastructure" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Infrastructure</div>

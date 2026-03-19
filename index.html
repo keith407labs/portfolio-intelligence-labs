@@ -3,775 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio Valuation Lab | Premium Underwriting for Chapter 13 Debt Portfolios</title>
-  <meta name="description" content="Premium underwriting for debt portfolios of Chapter 13 assets. PVL runs 10,000+ simulations per claim to deliver predictive default modeling, real-world cashflow distributions, and P50/P90 valuations." />
+  <title>PVL | The Valuation Engine for Chapter 13 Portfolios</title>
+  <meta name="description" content="PVL gives debt investors a measurable edge on Chapter 13 portfolios. 5,000+ Monte Carlo simulations per claim deliver recovery odds, projected cash flow, and IC-ready packages." />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 12a10.06 10.06 0 0 0-20 0Z'/><path d='M12 12v8a2 2 0 0 0 2 2H22'/><path d='M12 2v1'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C46849' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M22 12a10.06 10.06 0 0 0-20 0Z'/><path d='M12 12v8a2 2 0 0 0 2 2H22'/><path d='M12 2v1'/></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <style>
-    :root {
-      --bg-deep: #0B1120;
-      --bg-surface: #0f172a;
-      --bg-surface-2: #101b33;
-      --border: #334155;
-      --border-light: #475569;
-
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-
-      --brand-blue: #2563EB; 
-      --brand-glow: #3B82F6;
-      
-      --check-green: #10B981;
-      --amber: #F59E0B;
-      --red: #EF4444;
-      --violet: #A78BFA;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--text-main);
-      line-height: 1.6;
-      background-color: var(--bg-deep);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    .nums { font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; position: relative; }
-    .muted { color: var(--text-muted); }
-    .dim { color: var(--text-dim); }
-
-    /* --- NEON CHROME BACKGROUND --- */
-    .neon-bg-container {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
-      background: var(--bg-deep);
-    }
-    .grid-overlay {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
-    }
-    .neon-glow-1 {
-      position: absolute;
-      left: 18%;
-      top: 18%;
-      height: 54rem;
-      width: 54rem;
-      transform: translate(-50%, -50%);
-      border-radius: 100%;
-      filter: blur(120px);
-      opacity: 0.12;
-      background: radial-gradient(circle, #3B82F6, transparent 70%);
-    }
-    .neon-glow-2 {
-      position: absolute;
-      right: 10%;
-      top: 62%;
-      height: 46rem;
-      width: 46rem;
-      transform: translate(20%, -50%);
-      border-radius: 100%;
-      filter: blur(110px);
-      opacity: 0.10;
-      background: radial-gradient(circle, #8B5CF6, transparent 70%);
-    }
-
-    /* --- NAV --- */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(11, 17, 32, 0.95);
-      backdrop-filter: blur(20px);
-      z-index: 1000;
-      padding: 1.15rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .nav-flex { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
-    .logo {
-      font-weight: 800;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .logo svg { stroke: var(--brand-glow); width: 22px; height: 22px; }
-    
-    .pill {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(96,165,250,0.25);
-      background: rgba(59,130,246,0.10);
-      color: var(--brand-glow);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .nav-links { display: flex; gap: 1.6rem; align-items: center; }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: 0.2s;
-    }
-    .nav-links a:hover { color: var(--text-main); }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-main);
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    .btn-outline, .btn-primary {
-      padding: 0.65rem 1.25rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      white-space: nowrap;
-    }
-    .btn-outline {
-      border: 1px solid var(--border-light);
-      color: var(--text-main);
-      background: rgba(255,255,255,0.02);
-    }
-    .btn-outline:hover {
-      border-color: var(--brand-blue);
-      background: rgba(59, 130, 246, 0.10);
-      box-shadow: 0 0 0 4px rgba(59,130,246,0.06);
-    }
-    .btn-primary {
-      background: linear-gradient(to right, var(--brand-blue), #2563EB);
-      color: white;
-      border: 1px solid rgba(59,130,246,0.35);
-    }
-    .btn-primary:hover {
-      box-shadow: 0 0 24px rgba(59, 130, 246, 0.25);
-      transform: translateY(-1px);
-    }
-
-    /* --- HERO --- */
-    .hero {
-      min-height: 100vh;          
-      display: flex;              
-      align-items: center;        
-      justify-content: center;    
-      padding-top: 60px;          
-      text-align: center;         
-    }
-    .hero-grid {
-      display: block;             
-      max-width: 800px;           
-      margin: 0 auto;             
-    }
-    .hero h1 {
-      font-size: 3.25rem; 
-      font-weight: 800;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      color: var(--text-main);
-    }
-    .hero h1 span {
-      background: linear-gradient(to right, #60A5FA, #A78BFA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 56ch;
-      font-weight: 350;
-      margin-bottom: 2.0rem;
-    }
-    .hero-cta-row {
-      display: flex;
-      gap: 0.9rem;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;    
-      margin-bottom: 2rem;
-    }
-    .trust-row {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;    
-      color: var(--text-dim);
-      font-size: 0.9rem;
-    }
-    .trust-item { display: inline-flex; gap: 0.5rem; align-items: center; }
-    .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      box-shadow: 0 0 10px currentColor;
-      background: var(--check-green);
-      color: var(--check-green);
-      opacity: 0.9;
-    }
-
-    /* --- DEAL SCREEN --- */
-    .deal-screen-wrap {
-      border: 1px solid rgba(255, 255, 255, 0.08); 
-      border-top: 1px solid rgba(255, 255, 255, 0.15); 
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(15, 23, 42, 0.60); 
-      backdrop-filter: blur(12px);         
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 20px 50px -10px rgba(0, 0, 0, 0.7); 
-    }
-    .deal-screen-header {
-      padding: 1.2rem 1.5rem;
-      border-bottom: 1px solid rgba(148,163,184,0.14);
-      background: rgba(255,255,255,0.02);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .deal-screen-header h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    /* Portfolio Overview Cards */
-    .portfolio-overview {
-      padding: 1.5rem;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr); 
-      gap: 1rem;
-      background: rgba(15,23,42,0.3);
-      border-bottom: 1px solid rgba(148,163,184,0.14);
-    }
-    .overview-card {
-      border: 1px solid rgba(148,163,184,0.14);
-      border-radius: 8px;
-      padding: 1rem;
-      background: rgba(3,7,18,0.55);
-    }
-    .overview-card .label {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.4rem;
-      white-space: nowrap;
-    }
-    .overview-card .value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      font-family: 'JetBrains Mono';
-      color: var(--text-main);
-      letter-spacing: -1px;
-    }
-    .overview-card .subtext {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      margin-top: 0.3rem;
-    }
-
-    /* Account Table */
-    .account-table-wrap {
-      overflow-x: auto;
-      padding: 1.5rem;
-    }
-    .account-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      min-width: 1020px;
-    }
-    .account-table thead {
-      border-bottom: 2px solid rgba(148,163,184,0.2);
-    }
-    .account-table th {
-      padding: 0.8rem 1rem;
-      text-align: left;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-dim);
-      font-weight: 700;
-    }
-    .account-table td {
-      padding: 1rem;
-      border-bottom: 1px solid rgba(148,163,184,0.08);
-      color: var(--text-muted);
-    }
-    .account-table tbody tr:hover {
-      background: rgba(59,130,246,0.04);
-    }
-    .account-table .account-id {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--brand-glow);
-      font-weight: 600;
-    }
-    .account-table .status-badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .status-badge.active {
-      background: rgba(16,185,129,0.15);
-      color: var(--check-green);
-      border: 1px solid rgba(16,185,129,0.3);
-    }
-    .status-badge.dismissed {
-      background: rgba(239,68,68,0.15);
-      color: var(--red);
-      border: 1px solid rgba(239,68,68,0.3);
-    }
-    .status-badge.completed {
-      background: rgba(59,130,246,0.15);
-      color: var(--brand-glow);
-      border: 1px solid rgba(59,130,246,0.3);
-    }
-
-    /* PVL Reality badges */
-    .pvl-badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .pvl-badge.on-track {
-      background: rgba(16,185,129,0.15);
-      color: var(--check-green);
-      border: 1px solid rgba(16,185,129,0.3);
-    }
-    .pvl-badge.at-risk {
-      background: rgba(245,158,11,0.15);
-      color: var(--amber);
-      border: 1px solid rgba(245,158,11,0.3);
-    }
-    .pvl-badge.critical {
-      background: rgba(239,68,68,0.15);
-      color: var(--red);
-      border: 1px solid rgba(239,68,68,0.3);
-    }
-
-    /* Discrepancy styling */
-    .discrepancy {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-    .discrepancy.negative { color: var(--red); }
-    .discrepancy.positive { color: var(--check-green); }
-
-    /* --- SECTIONS --- */
-    section { padding: 5.5rem 0; }
-    .section-header { text-align: center; margin-bottom: 3.5rem; }
-    .section-header h2 {
-      font-size: 2.25rem;
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin-bottom: 0.8rem;
-      color: var(--text-main);
-    }
-    .subtitle { color: var(--text-muted); font-size: 1.05rem; max-width: 78ch; margin: 0 auto; }
-
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .card {
-      background: rgba(15, 23, 42, 0.4); 
-      border: 1px solid rgba(148,163,184,0.1);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      background: rgba(15, 23, 42, 0.8);
-      border-color: rgba(96,165,250,0.5); 
-      box-shadow: 0 0 0 1px rgba(96,165,250,0.1), 0 20px 40px -15px rgba(0,0,0,0.7);
-    }
-    .card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      margin-bottom: 0.5rem;
-    }
-    .card p { color: var(--text-muted); font-size: 0.95rem; }
-
-    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
-    .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      padding: 0.25rem 0.55rem;
-      border-radius: 4px;
-      border: 1px solid rgba(148,163,184,0.18);
-      color: rgba(248,250,252,0.85);
-      background: rgba(255,255,255,0.02);
-    }
-    .tag.blue { border-color: rgba(59,130,246,0.35); background: rgba(59,130,246,0.08); }
-    .tag.green { border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.08); }
-    .tag.violet { border-color: rgba(167,139,250,0.35); background: rgba(167,139,250,0.08); }
-
-    /* --- I/O SPLIT --- */
-    .io-wrap {
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(15,23,42,0.40);
-    }
-    .io-grid { display: grid; grid-template-columns: 1fr 1fr; }
-    .io-col { padding: 2rem; }
-    .io-col + .io-col { border-left: 1px solid rgba(148,163,184,0.14); }
-    .io-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
-    .io-title-row h3 { font-size: 1.0rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-    .io-list { list-style: none; display: grid; gap: 0.85rem; }
-    .io-item {
-      border: 1px solid rgba(148,163,184,0.14);
-      border-radius: 8px;
-      padding: 1.0rem 1.1rem;
-      background: rgba(3,7,18,0.45);
-    }
-    .io-item .top { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; margin-bottom: 0.35rem; }
-    .io-item .name { font-weight: 700; font-size: 0.95rem; }
-    .io-item .type { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-dim); }
-    .io-item .desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
-    .io-item .fields {
-      margin-top: 0.65rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-dim);
-    }
-
-    /* --- SAMPLE OUTPUT --- */
-    .sample-wrap {
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(3,7,18,0.35);
-    }
-    .sample-head {
-      padding: 1.1rem 1.4rem;
-      border-bottom: 1px solid rgba(148,163,184,0.14);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255,255,255,0.02);
-    }
-    .sample-head strong { letter-spacing: 0.2px; font-size: 0.95rem; }
-    .sample-body { padding: 1.4rem; display: grid; gap: 1.0rem; }
-
-    .kv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; }
-    .kv {
-      border: 1px solid rgba(148,163,184,0.14);
-      border-radius: 8px;
-      padding: 0.85rem 0.95rem;
-      background: rgba(15,23,42,0.55);
-    }
-    .kv .k { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-    .kv .v { margin-top: 0.25rem; font-size: 1.25rem; font-weight: 700; font-family: 'JetBrains Mono'; }
-
-    .files-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
-    .file {
-      border: 1px solid rgba(148,163,184,0.14);
-      border-radius: 8px;
-      padding: 0.95rem 1.0rem;
-      background: rgba(15,23,42,0.55);
-    }
-    .file .fn { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.85rem; color: var(--text-main); }
-    .file .fd { margin-top: 0.35rem; color: var(--text-muted); font-size: 0.85rem; }
-    .file .meta { margin-top: 0.65rem; color: var(--text-dim); font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
-
-    /* --- ROI SECTION --- */
-    .roi-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    
-    .bullets { list-style: none; display: grid; gap: 0.75rem; margin-top: 1rem; }
-    .bullets li { display: flex; gap: 0.75rem; align-items: flex-start; color: var(--text-muted); font-size: 0.9rem; }
-    .tick {
-      width: 18px; height: 18px; border-radius: 4px;
-      background: rgba(16,185,129,0.12);
-      border: 1px solid rgba(16,185,129,0.28);
-      color: var(--check-green);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-weight: 900;
-      flex: 0 0 auto;
-      margin-top: 3px;
-    }
-
-    /* --- PRICING --- */
-    .pricing-wrap {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 1.25rem;
-      align-items: stretch;
-    }
-    .pricing-card {
-      background: rgba(15,23,42,0.6);
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 12px;
-      padding: 1.75rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .pricing-card.featured {
-      border-color: rgba(59,130,246,0.45);
-      background: linear-gradient(to bottom, rgba(15,23,42,0.8), rgba(16,27,51,0.8));
-      box-shadow: 0 0 40px rgba(59, 130, 246, 0.08);
-    }
-    .price {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 2.4rem;
-      font-weight: 700;
-      letter-spacing: -2px;
-      margin-bottom: 0.35rem;
-    }
-    .valuation-count {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--brand-glow);
-      margin-bottom: 0.25rem;
-      letter-spacing: 0;
-    }
-    .per-val {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      margin-bottom: 1rem;
-    }
-    .price span { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 0; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400;}
-    .pricing-title { font-weight: 800; font-size: 1.15rem; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
-    .pricing-sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.5; }
-
-    .cta-wide {
-      margin-top: 1.5rem;
-      display: flex;
-      gap: 0.9rem;
-      flex-wrap: wrap;
-    }
-
-    /* --- MATRIX WITH DOTS --- */
-    .comparison-wrapper {
-      position: relative;
-      border: 1px solid rgba(148,163,184,0.18);
-      border-radius: 12px;
-      background: rgba(15,23,42,0.75);
-      overflow: hidden;
-    }
-    .comparison-wrapper::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: 40px;
-      background: linear-gradient(to right, transparent, rgba(15,23,42,0.9));
-      pointer-events: none; 
-      z-index: 10;
-    }
-    .table-scroll { overflow-x: auto; width: 100%; }
-    table { width: 100%; border-collapse: collapse; min-width: 700px; }
-    th {
-      background: rgba(3,7,18,0.5);
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 1.2rem 1.5rem;
-      text-align: left;
-    }
-    td {
-      padding: 1.1rem 1.5rem;
-      border-top: 1px solid rgba(148,163,184,0.14);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      vertical-align: middle;
-    }
-    .category-row td {
-      background: rgba(255,255,255,0.02);
-      color: var(--brand-glow);
-      font-weight: 700;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .feature-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      display: inline-block;
-      box-shadow: 0 0 8px currentColor;
-    }
-    .feature-dot.included {
-      background: var(--check-green);
-      color: var(--check-green);
-    }
-    .feature-dot.excluded {
-      background: var(--red);
-      color: var(--red);
-    }
-    .tier-col { text-align: center; }
-
-    .comparison-wrapper th:first-child,
-    .comparison-wrapper td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 2;
-      background: var(--bg-surface);
-    }
-    .comparison-wrapper th:first-child { background: rgba(3,7,18,0.95); }
-    .comparison-wrapper .category-row td:first-child { background: rgba(15,20,35,0.98); }
-
-    /* --- PILOT SECTION --- */
-    .pilot-card {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(to bottom, rgba(15,23,42,0.8), rgba(16,27,51,0.8));
-      border-color: rgba(59,130,246,0.45);
-      box-shadow: 0 0 50px rgba(59, 130, 246, 0.12);
-    }
-    .pilot-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-    }
-    .pilot-price {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: var(--text-main);
-    }
-    .pilot-price span {
-      font-size: 1rem;
-      color: var(--text-muted);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 400;
-      letter-spacing: 0;
-    }
-    .pilot-checklist {
-      display: flex;
-      justify-content: center;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 3rem;
-    }
-    .pilot-check-item {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      color: var(--text-main);
-      font-size: 0.95rem;
-    }
-
-    /* --- FOOTER --- */
-    footer {
-      padding: 4rem 0;
-      text-align: center;
-      border-top: 1px solid rgba(148,163,184,0.14);
-      color: var(--text-dim);
-    }
-
-    /* --- RESPONSIVE --- */
-    @media (max-width: 1200px) {
-      .pricing-wrap { grid-template-columns: repeat(3, 1fr); }
-    }
-    
-    @media (max-width: 980px) {
-      .mobile-menu-btn { display: block; }
-      
-      .nav-links {
-        display: none; 
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(11, 17, 32, 0.98);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-        flex-direction: column;
-        padding: 1.5rem 2rem;
-        gap: 1.5rem;
-        align-items: flex-start;
-      }
-      .nav-links.active { display: flex; }
-
-      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .hero h1 { font-size: 3.2rem; }
-      .kv-grid { grid-template-columns: 1fr 1fr; }
-      .files-grid { grid-template-columns: 1fr; }
-      .io-grid { grid-template-columns: 1fr; }
-      .io-col { padding: 1.5rem; }
-      .io-col + .io-col { border-left: none; border-top: 1px solid rgba(148,163,184,0.14); }
-      .grid-3 { grid-template-columns: 1fr; }
-      .pricing-wrap { grid-template-columns: 1fr; }
-      
-      .roi-grid { grid-template-columns: 1fr; gap: 2rem; } 
-      
-      .portfolio-overview { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 768px) {
-      .portfolio-overview { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 600px) {
-      .hero { padding-top: 8.5rem; }
-      .hero h1 { font-size: 2.5rem; }
-      .container { padding: 0 1.5rem; }
-      .pricing-card { padding: 1.5rem; }
-      .io-col { padding: 1.25rem; }
-      
-      .portfolio-overview { grid-template-columns: 1fr; }
-      .account-table-wrap { padding: 1rem; }
-      
-      .price { font-size: 2rem; }
-      
-      .pilot-card { padding: 2.5rem 1.5rem; }
-      .pilot-title { font-size: 2rem; }
-      .pilot-price { font-size: 2.2rem; }
-      .pilot-checklist { flex-direction: column; align-items: center; gap: 1rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -781,65 +25,122 @@
     <div class="neon-glow-2"></div>
   </div>
 
+  <!-- ═══════════ NAV ═══════════ -->
   <nav>
     <div class="container nav-flex">
       <div class="logo">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a10.06 10.06 0 0 0-20 0Z"/><path d="M12 12v8a2 2 0 0 0 2 2H22"/><path d="M12 2v1"/></svg>
         PVL
       </div>
-      
+
       <button class="mobile-menu-btn" aria-label="Toggle menu">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
 
       <div class="nav-links">
+        <a href="#data-proof">Data</a>
         <a href="#how">How It Works</a>
         <a href="#io">Data Structures</a>
         <a href="#calibration">Calibration</a>
         <a href="#pricing">Pricing</a>
         <a href="compliance.html">Compliance</a>
-        <a href="#" class="btn-outline">Client Login</a>
       </div>
     </div>
   </nav>
-    
-<section class="hero" style="min-height: 85vh;">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" style="min-height: 85vh;">
     <div class="container">
       <div class="hero-grid">
         <div>
-          <div class="mono" style="color: var(--brand-glow); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1.5rem; text-transform: uppercase;">
-            Institutional-Grade Underwriting for Debt Investors
-          </div>
-          <h1>Portfolio Pricing<br><span>for Chapter 13 Accounts.</span></h1>
-          
+          <h1>Premium Valuation Engine for <span>Chapter 13 Debt Portfolios</span></h1>
+
           <p style="margin-left: auto; margin-right: auto; line-height: 1.8; max-width: 65ch; margin-bottom: 2.5rem; font-size: 1.1rem; color: var(--text-muted); font-weight: 350;">
-            PVL calculates the true odds of repayment by stress-testing every claim across 10,000+ simulated outcomes. We combine trustee-verified cashflows and predictive default modeling to uncover the hidden dismissal risks, and erratic payment histories — <strong>giving your fund a measurable edge on every bid.</strong>
+            PVL tells you the odds of recovery on every claim — so you know what you'll collect before you bid.
           </p>
 
           <div class="hero-cta-row">
-            <a href="#pilot" class="btn-primary">Start Pilot Validation</a>
+            <a href="#pilot" class="btn-primary">See the Engine in Action</a>
             <a href="#how" class="btn-outline">View Methodology</a>
+          </div>
+
+          <!-- Hero Stat Row -->
+          <div class="hero-stats fade-up">
+            <div class="hero-stat">
+              <div class="stat-value nums" data-count-target="150000" data-count-prefix="" data-count-suffix="+">0</div>
+              <div class="stat-label">Claims Modeled</div>
+            </div>
+            <div class="hero-stat">
+              <div class="stat-value nums" data-count-target="1" data-count-prefix="$" data-count-suffix="B+" data-count-decimals="0">$0B+</div>
+              <div class="stat-label">Projected Recovery</div>
+            </div>
+            <div class="hero-stat">
+              <div class="stat-value nums" data-count-target="5000" data-count-prefix="" data-count-suffix="+">0</div>
+              <div class="stat-label">Scenarios per Claim</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div style="border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(15,23,42,0.3); padding: 2rem 0;">
+  <div style="border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(28,25,23,0.3); padding: 2rem 0;">
     <div class="container trust-row">
-      <div class="trust-item"><div class="dot"></div> Calibrated on 150,000+ Completed Cases</div>
-      <div class="trust-item"><div class="dot"></div> $1B+ in Face Value Analyzed</div>
-      <div class="trust-item"><div class="dot"></div> 5+ Years of Trustee Disbursement Data</div>
+      <div class="trust-item"><div class="dot"></div> 484,800 Ch. 13 Filings in 2024 (+14% YoY)</div>
+      <div class="trust-item"><div class="dot"></div> 49% National Completion Rate</div>
+      <div class="trust-item"><div class="dot"></div> 5+ Years of Disbursement Data</div>
     </div>
   </div>
 
-  <section id="deal-screen" style="padding-top: 5rem;">
+  <!-- ═══════════ DATA PROOF ═══════════ -->
+  <section id="data-proof" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Engine Output</div>
+        <h2>Recovery Odds, Modeled in Detail</h2>
+        <p class="subtitle">
+          Every chart below is built from actual PVL engine output on a live portfolio — completion odds, projected cash flow, and recovery confidence ranges.
+        </p>
+      </div>
+
+      <!-- Chart A: Survival Curve (full-width) -->
+      <div class="chart-container full-width fade-up">
+        <h3>What Are the Odds the Plan Completes?</h3>
+        <div class="chart-subtitle">Only 49% of Ch. 13 plans completed in 2024 (BAPCPA) — and 51% of dismissals were for non-payment</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="survivalChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart B + C side by side -->
+      <div class="chart-grid">
+        <div class="chart-container fade-up">
+          <h3>When Does the Cash Come In?</h3>
+          <div class="chart-subtitle">Trustee receipts actually collected — Sep 2025 to Jan 2026</div>
+          <div class="chart-canvas-wrap">
+            <canvas id="cashflowChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-container fade-up">
+          <h3>How Much Will You Recover?</h3>
+          <div class="chart-subtitle">Best case, worst case, and most likely recovery — 5,000 simulations</div>
+          <div class="chart-canvas-wrap">
+            <canvas id="mcChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DEAL SCREEN ═══════════ -->
+  <section id="deal-screen" class="fade-up" style="padding-top: 5rem;">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Deal Screen</div>
-        <h2>What the Seller Says vs. What We Found</h2>
+        <h2>The Tape Says "Performing." We Show You the Odds.</h2>
         <p class="subtitle">
-          Every account the seller marks "Active — Current" gets a second look. We pull actual trustee payment histories and court docket filings to expose the gaps between the tape and reality.
+          51% of Ch. 13 dismissals are for non-payment. Sellers still mark those claims as active. We model the actual odds of recovery — and flag the ones where the cash flow has already stopped.
         </p>
       </div>
 
@@ -851,41 +152,13 @@
           </div>
         </div>
 
-        <div class="portfolio-overview">
-          <div class="overview-card">
-            <div class="label">Total Accounts</div>
-            <div class="value nums">2,401</div>
-            <div class="subtext">Across 47 trustees</div>
-          </div>
-          <div class="overview-card">
-            <div class="label">Face Value</div>
-            <div class="value nums">$10.5M</div>
-            <div class="subtext">Mixed asset portfolio</div>
-          </div>
-          <div class="overview-card">
-            <div class="label">Portfolio NPV @ 18%</div>
-            <div class="value nums">$4.2M</div>
-            <div class="subtext" style="color: var(--check-green);">40.2% recovery rate</div>
-          </div>
-          <div class="overview-card">
-            <div class="label">Avg. Monthly Pay</div>
-            <div class="value nums">$242</div>
-            <div class="subtext">6-month weighted avg</div>
-          </div>
-          <div class="overview-card" style="border-color: rgba(239,68,68,0.25);">
-            <div class="label">Dismissal Risk</div>
-            <div class="value nums" style="color: var(--red);">387</div>
-            <div class="subtext">16% of portfolio</div>
-          </div>
-        </div>
-
         <div class="account-table-wrap">
           <table class="account-table">
             <thead>
               <tr>
                 <th>Account ID</th>
                 <th>Seller Status</th>
-                <th>PVL Reality</th>
+                <th>PVL Engine Output</th>
                 <th>Seller Est. NPV</th>
                 <th>PVL EV (P50)</th>
                 <th>P90 Floor</th>
@@ -954,63 +227,128 @@
     </div>
   </section>
 
-  <section id="how" style="border-top: 1px solid rgba(148,163,184,0.1);">
+  <!-- ═══════════ SENSITIVITY ═══════════ -->
+  <section id="sensitivity" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
     <div class="container">
-      <div class="section-header">
-        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Why Sellers' Numbers Are Wrong</div>
-        <h2>Static Models Miss What Predictive Analysis Finds</h2>
+      <div class="section-header fade-up">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Priority Stack</div>
+        <h2>Know Your Position in Line</h2>
+        <p class="subtitle">We model how the trustee actually disburses cash — across every tier — so you know what your unsecured position will realistically recover.</p>
+      </div>
+
+      <div class="chart-container full-width fade-up">
+        <h3>Creditor Priority Stack</h3>
+        <div class="chart-subtitle">Real case — $49K in filed claims, unsecured recovers 7 cents on the dollar</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="waterfallChart"></canvas>
+        </div>
+      </div>
+
+      <div class="grid-5 stagger-children" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 2rem;">
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--red); font-family: 'JetBrains Mono', monospace;">51%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Dismissed for non-payment</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--amber); font-family: 'JetBrains Mono', monospace;">34%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Repeat filers (prior 8 yrs)</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--brand-glow); font-family: 'JetBrains Mono', monospace;">76%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Best district completion rate</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--red); font-family: 'JetBrains Mono', monospace;">&lt;40%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Worst district completion rate</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--check-green); font-family: 'JetBrains Mono', monospace;">24%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Plans modified before completion</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ HOW IT WORKS ═══════════ -->
+  <section id="how" style="border-top: 1px solid rgba(168,162,158,0.1);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">How It Works</div>
+        <h2>How We Calculate the Odds</h2>
         <p class="subtitle">
-          Sellers project straight-line recoveries from 60-month plans. We model the chaos — simulating thousands of scenarios per claim to surface the risks that deterministic spreadsheets can't see.
+          Three layers of analysis that tell you what each claim will recover and when the cash will flow.
         </p>
       </div>
 
-      <div class="grid-3">
+      <div class="grid-3 stagger-children">
         <div class="card">
           <div class="mono" style="color: var(--brand-glow); font-size: 0.7rem; margin-bottom: 1rem;">[ 01 ]</div>
-          <h3>Stress-Testing Every Claim</h3>
-          <p>Sellers use a single "Active" status to project a perfect stream of revenue. We know the real world is messier. By <strong>simulating thousands of potential outcomes for each claim</strong>—factoring in local trustee behavior and debtor history—we expose the hidden downside risks that static spreadsheets miss.</p>
+          <h3>5,000+ Recovery Scenarios per Claim</h3>
+          <p>We simulate the cash flow on every claim 5,000+ times — varying payment speed, dismissal odds, funding rate, and macro shocks. Instead of one recovery estimate, you get a range: best case, worst case, and most likely.</p>
           <div class="tag-row">
-            <span class="tag blue">Predictive Modeling</span>
-            <span class="tag blue">Risk Profiling</span>
+            <span class="tag accent">6 Perturbation Factors</span>
+            <span class="tag accent">P10/P50/P90 Bands</span>
           </div>
         </div>
 
         <div class="card">
           <div class="mono" style="color: var(--violet); font-size: 0.7rem; margin-bottom: 1rem;">[ 02 ]</div>
-          <h3>Real-World Repayment Odds</h3>
-          <p>A standard waterfall only tells you the <em>order</em> of payment. We calculate the <strong>actual probability</strong> that you'll get paid. We don't just give you a single theoretical NPV; we deliver a realistic range of returns (P50 vs. P90) so you can bid based on your fund's exact risk appetite.</p>
+          <h3>Odds-Based Recovery Pricing</h3>
+          <p>Every claim gets a recovery value calibrated against five years of actual trustee cash flow. 13+ risk factors — pro se status, wage orders, lien strips, docket signals, district patterns — all roll into the odds of you getting paid.</p>
           <div class="tag-row">
-            <span class="tag violet">Probability Scoring</span>
-            <span class="tag violet">P50 / P90 Forecasts</span>
+            <span class="tag violet">13+ Risk Multipliers</span>
+            <span class="tag violet">44-State Macro Model</span>
           </div>
         </div>
 
         <div class="card">
           <div class="mono" style="color: var(--check-green); font-size: 0.7rem; margin-bottom: 1rem;">[ 03 ]</div>
-          <h3>Catching "Silent Defaults"</h3>
-          <p>An account can be technically "Active" on a tape for months after payments actually stop. We track <strong>real-time payment drop-offs</strong> against plan obligations. If a debtor's trajectory signals a likely dismissal, we flag it before you pay full price for a ghost claim.</p>
+          <h3>Early Warning Signals</h3>
+          <p>40+ docket patterns that move the odds — prior filings, missed 341 meetings, cramdown motions, payment gaps. We flag the claims most likely to stop paying before the cash flow dries up.</p>
           <div class="tag-row">
-            <span class="tag green">Early Warning Flags</span>
-            <span class="tag green">Loss Mitigation</span>
+            <span class="tag green">40+ Docket Patterns</span>
+            <span class="tag green">Prior Filing Detection</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="io">
+  <!-- ═══════════ RISK SIGNALS ═══════════ -->
+  <section id="risk-signals" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">What the Engine Finds</div>
+        <h2>What Moves the Odds on 1,937 Claims</h2>
+        <p class="subtitle">
+          Every claim is scanned for factors that raise or lower recovery odds. Here's what we flagged in a live portfolio.
+        </p>
+      </div>
+
+      <div class="chart-container full-width fade-up">
+        <h3>Factors That Move Recovery Odds</h3>
+        <div class="chart-subtitle">Red lowers your odds of getting paid — green raises them</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="riskSignalsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ I/O ═══════════ -->
+  <section id="io" class="fade-up">
     <div class="container">
       <div class="section-header">
-        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">How it Works</div>
-        <h2>Messy Tape In. IC-Ready Package Out.</h2>
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Data Pipeline</div>
+        <h2>Send Us the Tape. Get Back the Odds.</h2>
         <p class="subtitle">
-          Drop in the seller's file — however messy it is. We return a pristine valuation package with every claim scored, every discrepancy flagged, and every number your team needs to defend the bid.
+          Upload any portfolio file. We return recovery odds and projected cash flow on every claim — scored, ranked, and ready for your IC.
         </p>
       </div>
 
       <div class="io-wrap">
         <div class="io-grid">
-          <div class="io-col">
+          <div class="io-col fade-left">
             <div class="io-title-row">
               <h3>Ingestion</h3>
               <span class="pill">Secure Upload</span>
@@ -1021,21 +359,21 @@
                   <div class="name">Bid Tape</div>
                   <div class="type">CSV / XLSX</div>
                 </div>
-                <div class="desc">Drop in the seller's file as-is. We handle messy columns, inconsistent formatting, and missing fields.</div>
-                <div class="fields">Required: CaseNumber • Debtor Name (or ID) • Optional: District</div>
+                <div class="desc">Upload the portfolio file as-is. We handle messy columns, inconsistent formatting, and missing fields.</div>
+                <div class="fields">Required: CaseNumber &bull; Debtor Name (or ID) &bull; Optional: District</div>
               </li>
               <li class="io-item">
                 <div class="top">
                   <div class="name">Valuation Config</div>
                   <div class="type">Parameters</div>
                 </div>
-                <div class="desc">Set your own assumptions. We run predictive sensitivity analysis across your parameters.</div>
-                <div class="fields">Discount rate • Custom default curves • Payment decay sensitivity • Target return thresholds</div>
+                <div class="desc">Set your own discount rate and recovery assumptions. We stress-test them and show you what changes.</div>
+                <div class="fields">Discount rate &bull; Custom default curves &bull; Payment decay sensitivity &bull; Target return thresholds</div>
               </li>
             </ul>
           </div>
 
-          <div class="io-col">
+          <div class="io-col fade-right">
             <div class="io-title-row">
               <h3>Deliverables</h3>
               <span class="pill">Underwriting Package</span>
@@ -1046,24 +384,24 @@
                   <div class="name">Trustee Disbursement Ledger</div>
                   <div class="type mono">ledgers.csv</div>
                 </div>
-                <div class="desc">What the trustee actually paid out — line by line. Compare against what the seller claimed.</div>
-                <div class="fields">NDC_Case_ID • NDC_Claim_ID • Date • Amount • TransType • ClassCode</div>
+                <div class="desc">What the trustee actually paid out — line by line. The ground truth behind every recovery number.</div>
+                <div class="fields">NDC_Case_ID &bull; NDC_Claim_ID &bull; Date &bull; Amount &bull; TransType &bull; ClassCode</div>
               </li>
               <li class="io-item">
                 <div class="top">
-                  <div class="name">Claims & Waterfall Snapshot</div>
+                  <div class="name">Claims &amp; Waterfall Snapshot</div>
                   <div class="type mono">claims.csv</div>
                 </div>
-                <div class="desc">See exactly where your claim sits in the priority stack, and how plan amendments will shift your position over time.</div>
-                <div class="fields">ClaimLevel • ClassTypeCode (P/S/U) • PrincipalOwed • StopDisbursementFlag</div>
+                <div class="desc">See exactly where your claim sits in the priority stack and how much cash is left after senior creditors get paid.</div>
+                <div class="fields">ClaimLevel &bull; ClassTypeCode (P/S/U) &bull; PrincipalOwed &bull; StopDisbursementFlag</div>
               </li>
               <li class="io-item">
                 <div class="top">
                   <div class="name">Valuation Package</div>
                   <div class="type">Tables (CSV)</div>
                 </div>
-                <div class="desc">The numbers you hand to your IC. Probability-derived cashflow distributions, P50/P90 NPV by claim, tail risk flags, and every seller discrepancy documented.</div>
-                <div class="fields">P50/P90 cashflows • EV by case • Tail risk flags • <strong style="color:var(--brand-glow)">Discrepancy Report</strong></div>
+                <div class="desc">The numbers you hand to your IC. Recovery odds per claim, projected cash flow, tail risk flags, and the full variance analysis.</div>
+                <div class="fields">P50/P90 cashflows &bull; EV by case &bull; Tail risk flags &bull; <strong style="color:var(--brand-glow)">Variance Report</strong></div>
               </li>
             </ul>
           </div>
@@ -1072,13 +410,14 @@
     </div>
   </section>
 
-  <section id="sample">
+  <!-- ═══════════ SAMPLE OUTPUT ═══════════ -->
+  <section id="sample" class="fade-up">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Full Transparency</div>
         <h2>Every Number Is Auditable</h2>
         <p class="subtitle">
-          No black boxes. You get the raw trustee data, the model outputs, and the discrepancy flags — everything your IC needs to sign off on the bid.
+          No black boxes. You get the raw trustee cash flow, the recovery projections, and the discrepancy flags — everything your IC needs to sign off.
         </p>
       </div>
 
@@ -1089,20 +428,20 @@
         </div>
 
         <div class="sample-body">
-          <div class="kv-grid">
+          <div class="kv-grid stagger-children">
             <div class="kv">
               <div class="k">Accounts</div>
-              <div class="v nums">2,000</div>
+              <div class="v nums" data-count-target="2000">0</div>
               <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Sample Portfolio</div>
             </div>
             <div class="kv">
               <div class="k">Discount Rate</div>
-              <div class="v nums">18%</div>
+              <div class="v nums" data-count-target="18" data-count-suffix="%">0%</div>
               <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Configurable</div>
             </div>
             <div class="kv">
               <div class="k">Dismissal Hazard</div>
-              <div class="v nums">10%</div>
+              <div class="v nums" data-count-target="10" data-count-suffix="%">0%</div>
               <div class="dim" style="font-size:0.75rem;margin-top:0.35rem;">Annualized</div>
             </div>
             <div class="kv">
@@ -1112,32 +451,32 @@
             </div>
           </div>
 
-          <div class="files-grid">
+          <div class="files-grid stagger-children">
             <div class="file">
               <div class="fn">ledgers.csv</div>
-              <div class="fd">What the trustee actually disbursed — month by month, claim by claim.</div>
-              <div class="meta">Join keys: NDC_Case_ID • NDC_Claim_ID</div>
+              <div class="fd">Actual cash flow from the trustee — month by month, claim by claim.</div>
+              <div class="meta">Join keys: NDC_Case_ID &bull; NDC_Claim_ID</div>
             </div>
             <div class="file">
               <div class="fn">claims.csv</div>
-              <div class="fd">Where each claim sits in the priority stack and what's left after senior claims.</div>
-              <div class="meta">Join keys: NDC_Case_ID • NDC_Claim_ID</div>
+              <div class="fd">Where each claim sits in the stack and what's left to recover after senior creditors.</div>
+              <div class="meta">Join keys: NDC_Case_ID &bull; NDC_Claim_ID</div>
             </div>
             <div class="file">
               <div class="fn">risk_flags.csv</div>
-              <div class="fd">Every red flag: stopped payments, missing claims, silent defaults.</div>
+              <div class="fd">Every red flag: stopped cash flow, missing claims, silent defaults.</div>
               <div class="meta">Join keys: NDC_Case_ID</div>
             </div>
           </div>
 
           <div style="margin-top: 1.5rem; border: 1px solid rgba(245,158,11,0.25); border-radius: 8px; padding: 1.25rem; background: rgba(245,158,11,0.03);">
             <div style="font-size: 0.8rem; color: var(--amber); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.7rem;">
-              ⚠ What We Catch That Sellers Don't Show You
+              Sample Engine Findings
             </div>
             <div class="mono" style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;">
-              • Case 24-12345: Plan shows $285/mo, trustee ledger avg $142/mo (6mo)<br>
-              • Case 24-54321: Unsecured claim listed @ $8,400 — no disbursements in 14 months<br>
-              • Case 24-99999: Secured claim paid in full, unsecured recovery now viable
+              &bull; Case 24-12345: Plan shows $285/mo, trustee ledger avg $142/mo (6mo)<br>
+              &bull; Case 24-54321: Unsecured claim listed @ $8,400 — no disbursements in 14 months<br>
+              &bull; Case 24-99999: Secured claim paid in full, unsecured recovery now viable
             </div>
           </div>
         </div>
@@ -1145,106 +484,67 @@
     </div>
   </section>
 
-  <section id="roi" style="border-top: 1px solid rgba(148,163,184,0.1); background: rgba(15,23,42,0.2);">
+  <!-- ═══════════ CALIBRATION ═══════════ -->
+  <section id="calibration" class="fade-up" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header">
-        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">The Economics of Accuracy</div>
-        <h2>The Cost of Being Wrong</h2>
-        <p class="subtitle">A single "ghost claim" can wipe out the margin of ten performing ones. We calculate the mathematical distance between the seller's tape and the trustee's reality.</p>
+        <div class="mono" style="color:var(--violet); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Continuous Improvement</div>
+        <h2>A Model That Sharpens Itself</h2>
+        <p class="subtitle">Actual recovery data feeds back into the engine. Every portfolio you acquire makes the next set of odds more accurate.</p>
       </div>
 
-      <div class="roi-grid">
-        <div>
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Catching the "Margin Killers"</h3>
-          <ul class="bullets" style="gap: 1.2rem;">
-            <li><span class="tick">✓</span> <strong>Ch 13 → 7 Conversions:</strong> We flag cases with high risk of early exit before they drain your payment pool.</li>
-            <li><span class="tick">✓</span> <strong>Erratic Payers:</strong> If a debtor misses 2 of the last 4 payments, your expected value shouldn't be 100%. We factor in real-world payment decay so you aren't overpaying for historically flaky accounts.</li>
-            <li><span class="tick">✓</span> <strong>The Waterfall Shift:</strong> We simulate how plan amendments months down the road will shift the priority stack, showing you exactly how junior claims will be impacted before you buy them.</li>
-          </ul>
+      <p class="muted fade-up" style="text-align: center; font-size: 1.05rem; line-height: 1.7; max-width: 72ch; margin: 0 auto 3rem;">
+        Real cash flow comes in. We compare it to what we projected. The difference tunes the model — so the next portfolio's recovery odds are tighter.
+      </p>
+
+      <!-- Feedback Loop Steps -->
+      <div class="grid-5 stagger-children" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 3rem;">
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div class="mono" style="color: var(--violet); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">01</div>
+          <strong style="font-size: 0.95rem;">Bid</strong>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem;">Projections inform your price</p>
         </div>
-        <div class="card" style="background: var(--bg-surface-2); border-left: 4px solid var(--brand-glow);">
-          <div class="mono" style="font-size: 0.85rem; color: var(--brand-glow); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">
-            // The ROI
-          </div>
-          
-          <h4 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--text-main); line-height: 1.4; font-weight: 700;">
-            Every dollar of "ghost value" we catch drops straight to your bottom line.
-          </h4>
-          
-          <p class="mono" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-            (Seller's Tape Value) - (PVL's Reality Check) = <strong style="color: var(--check-green);">Your Capital Saved</strong>
-          </p>
-          
-          <div style="height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 1.25rem;"></div>
-          
-          <p class="muted" style="font-size: 0.95rem; line-height: 1.6;">
-            If PVL flags just one <strong>$8,000</strong> silent default per month, the platform has already paid for itself. Most clients find $50k+ in ghost value per tape.
-          </p>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div class="mono" style="color: var(--violet); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">02</div>
+          <strong style="font-size: 0.95rem;">Collect</strong>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem;">Trustee disbursements flow in</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div class="mono" style="color: var(--violet); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">03</div>
+          <strong style="font-size: 0.95rem;">Measure</strong>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem;">Actuals vs. projections</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div class="mono" style="color: var(--violet); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">04</div>
+          <strong style="font-size: 0.95rem;">Tune</strong>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem;">District-specific adjustments</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div class="mono" style="color: var(--violet); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">05</div>
+          <strong style="font-size: 0.95rem;">Outbid</strong>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem;">Sharper model, winning bids</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section id="calibration" style="border-top: 1px solid rgba(148,163,184,0.1);">
-    <div class="container">
-      <div class="section-header">
-        <div class="mono" style="color:var(--violet); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">The Calibration Loop</div>
-        <h2>Stop Bidding Blindly. Tune Every Future Bid.</h2>
-        <p class="subtitle">Most debt buyers bid in a vacuum — win a tape, collect, and never truly know why they over-performed or under-performed. PVL's backtesting closes that loop.</p>
-      </div>
-
-      <div class="roi-grid">
-        <div>
-          <h3 style="margin-bottom: 1rem; font-size: 1.35rem; line-height: 1.3;">Your actual collections data becomes your competitive edge.</h3>
-          <p class="muted" style="margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.7;">By mapping actual trustee disbursements against your past projections, we identify specific districts where you're being too conservative (losing deals) or too aggressive (losing money). Every month, your model gets sharper.</p>
-          <ul class="bullets" style="gap: 1.2rem;">
-            <li><span class="tick">✓</span> <strong>Model Confidence Score:</strong> If our model projected a P50 recovery of 12% and you realized 11.8%, your model confidence is elite. We give you the documentation to prove this accuracy to your IC and LPs.</li>
-            <li><span class="tick">✓</span> <strong>District-Specific Tuning:</strong> Every trustee's office is a different variable. Our backtesting identifies that Trustee X in the Northern District of Georgia consistently pays 15% faster than baseline — and tunes your expected recovery timelines accordingly.</li>
-            <li><span class="tick">✓</span> <strong>IC Justification Engine:</strong> Auto-generated one-page executive summaries that say: "Our underwriting engine has been within ±3% of actuals for the last six months. This bid is backed by proven predictive accuracy."</li>
-          </ul>
+      <div class="grid-3 stagger-children">
+        <div class="card">
+          <h3>Model Confidence Score</h3>
+          <p>We said 12% recovery, you collected 11.8%. We document that track record so your IC and LPs can see it.</p>
         </div>
-        <div>
-          <div class="card" style="background: var(--bg-surface-2); border-left: 4px solid var(--violet); margin-bottom: 1.5rem;">
-            <div class="mono" style="font-size: 0.85rem; color: var(--violet); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">
-              // The Feedback Loop
-            </div>
-            <div style="display: grid; gap: 1rem;">
-              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="mono" style="color: var(--violet); font-weight: 700; flex: 0 0 auto;">01</div>
-                <div><strong style="color: var(--text-main);">Bid</strong><span class="muted"> — Projections inform your price</span></div>
-              </div>
-              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="mono" style="color: var(--violet); font-weight: 700; flex: 0 0 auto;">02</div>
-                <div><strong style="color: var(--text-main);">Collect</strong><span class="muted"> — Actual trustee disbursements flow in</span></div>
-              </div>
-              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="mono" style="color: var(--violet); font-weight: 700; flex: 0 0 auto;">03</div>
-                <div><strong style="color: var(--text-main);">Measure</strong><span class="muted"> — Compare actuals vs. original projections</span></div>
-              </div>
-              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="mono" style="color: var(--violet); font-weight: 700; flex: 0 0 auto;">04</div>
-                <div><strong style="color: var(--text-main);">Tune</strong><span class="muted"> — Adjust pricing levers for specific districts</span></div>
-              </div>
-              <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                <div class="mono" style="color: var(--violet); font-weight: 700; flex: 0 0 auto;">05</div>
-                <div><strong style="color: var(--text-main);">Outbid</strong><span class="muted"> — Sharper model = higher confidence = winning bids</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="card" style="background: rgba(167,139,250,0.04); border-color: rgba(167,139,250,0.25);">
-            <div style="font-size: 0.8rem; color: var(--violet); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.7rem;">
-              Give your IC the data to say "Yes"
-            </div>
-            <p class="muted" style="font-size: 0.95rem; line-height: 1.6;">
-              The analyst using your tool has to defend their bid to a committee. Backtesting is their best friend — auto-generated IC-Ready Performance Memos that prove the model's track record, not just its methodology.
-            </p>
-          </div>
+        <div class="card">
+          <h3>District-Level Tuning</h3>
+          <p>Completion rates swing from 76% (E.D. Washington) to under 40% in the worst districts. We calibrate recovery odds to each trustee's actual disbursement pattern.</p>
+        </div>
+        <div class="card">
+          <h3>IC-Ready Memos</h3>
+          <p>Auto-generated reports showing projected vs. actual recovery — within ±3%. The documentation your committee needs to keep buying.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="pricing">
+  <!-- ═══════════ PRICING (with merged matrix) ═══════════ -->
+  <section id="pricing" class="fade-up">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Volume-Based Pricing</div>
@@ -1252,13 +552,13 @@
         <p class="subtitle">Every tier receives the <strong>Complete Valuation Package</strong>. You only pay for the number of claims you need to underwrite each month.</p>
       </div>
 
-      <div class="pricing-wrap">
+      <div class="pricing-wrap stagger-children">
         <div class="pricing-card">
           <div class="pricing-title">Foundation</div>
           <div class="price nums">$5,000 <span>/mo</span></div>
           <div class="valuation-count">Up to 1,000 valuations</div>
           <div class="per-val">~$6.67 per claim</div>
-          <div class="pricing-sub">Perfect for boutique firms or buyers bidding on 1-2 tapes per month. Includes the full reality-check suite.</div>
+          <div class="pricing-sub">Recovery odds and cash flow projections on your first portfolio.</div>
           <ul class="bullets">
             <li><span class="tick">✓</span> Complete Valuation Package</li>
             <li><span class="tick">✓</span> Silent Default & Cramdown Alerts</li>
@@ -1272,7 +572,7 @@
           <div class="price nums">$10,000 <span>/mo</span></div>
           <div class="valuation-count">Up to 5,000 valuations</div>
           <div class="per-val">$4.00 per claim</div>
-          <div class="pricing-sub">For active deal desks. Significant unit-cost savings as you scale your bidding frequency.</div>
+          <div class="pricing-sub">For buyers bidding regularly who need fast odds on high volume.</div>
           <ul class="bullets">
             <li><span class="tick">✓</span> <strong>Everything in Foundation</strong></li>
             <li><span class="tick">✓</span> Priority Processing Queue</li>
@@ -1281,11 +581,11 @@
           <div class="cta-wide"><a href="#" class="btn-primary" style="width:100%; justify-content:center;">Scale Up</a></div>
         </div>
 
-        <div class="pricing-card" style="border-color: var(--violet); background: rgba(139, 92, 246, 0.05);">
+        <div class="pricing-card" style="border-color: var(--violet); background: rgba(232, 168, 124, 0.05);">
           <div class="pricing-title" style="color: var(--violet);">Calibration Loop</div>
           <div class="price nums">+$2,500 <span>/mo</span></div>
           <div class="valuation-count">Yield Optimization Engine</div>
-          <div class="pricing-sub">Map actual collections against projections. Identify where you're too conservative or too aggressive — then tune every future bid.</div>
+          <div class="pricing-sub">Track actual recovery against projections. Sharpen odds over time.</div>
           <ul class="bullets">
             <li><span class="tick" style="color: var(--violet); border-color: var(--violet);">✓</span> Variance Analysis Reports</li>
             <li><span class="tick" style="color: var(--violet); border-color: var(--violet);">✓</span> District-Specific Model Tuning</li>
@@ -1295,15 +595,9 @@
           <div class="cta-wide"><a href="#calibration" class="btn-outline" style="width:100%; justify-content:center; border-color: var(--violet); color: var(--violet);">See the Calibration Loop</a></div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section id="matrix">
-    <div class="container">
-      <div class="section-header">
-        <h2>Standard Features vs. Add-Ons</h2>
-      </div>
-      <div class="comparison-wrapper">
+      <!-- Feature Comparison (merged from #matrix) -->
+      <div class="comparison-wrapper fade-up">
         <div class="table-scroll">
           <table>
             <thead>
@@ -1317,7 +611,7 @@
             <tbody>
               <tr class="category-row"><td colspan="4">Standard in All Valuations</td></tr>
               <tr>
-                <td>Monte Carlo Simulation (10,000+ iterations/claim)</td>
+                <td>Monte Carlo Simulation (5,000+ iterations/claim)</td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col"><span class="feature-dot included"></span></td>
                 <td class="tier-col">—</td>
@@ -1342,7 +636,7 @@
               </tr>
               <tr class="category-row"><td colspan="4">Calibration & Yield Optimization</td></tr>
               <tr>
-                <td>Actual vs. Projected Variance Reporting</td>
+                <td>Actual vs. Projected Recovery Reporting</td>
                 <td class="tier-col">—</td>
                 <td class="tier-col">—</td>
                 <td class="tier-col"><span class="feature-dot included" style="background:var(--violet); color:var(--violet);"></span></td>
@@ -1366,7 +660,7 @@
                 <td class="tier-col"><span class="feature-dot included" style="background:var(--violet); color:var(--violet);"></span></td>
               </tr>
               <tr>
-                <td>Payment Speed Recalibration by Trustee</td>
+                <td>Cash Flow Recalibration by Trustee</td>
                 <td class="tier-col">—</td>
                 <td class="tier-col">—</td>
                 <td class="tier-col"><span class="feature-dot included" style="background:var(--violet); color:var(--violet);"></span></td>
@@ -1378,30 +672,31 @@
     </div>
   </section>
 
-  <section id="pilot" style="padding: 6rem 0;">
+  <!-- ═══════════ PILOT ═══════════ -->
+  <section id="pilot" class="fade-up" style="padding: 6rem 0;">
     <div class="container">
       <div class="card pilot-card">
-        <div class="pill" style="display:inline-block; margin-bottom:1.5rem;">Risk-Free Entry</div>
-        
-        <h2 class="pilot-title">The Pilot Run</h2>
-        
-        <div class="price nums pilot-price">
+        <div class="pill" style="display:inline-block; margin-bottom:1.5rem;">Try It</div>
+
+        <h2 class="pilot-title">See the Engine in Action</h2>
+
+        <div class="price nums pilot-price pulse-price">
           $500 <span>/ flat rate</span>
         </div>
 
         <p style="max-width:70ch;margin:0 auto 2.5rem; font-size: 1.1rem; line-height: 1.7;" class="muted">
-          Send us your next tape. We'll run the entire portfolio against trustee-verified payment data and hand you the top 100 most dangerous discrepancies. <strong>If PVL doesn't change your bid, you've lost $500. If it does, you just saved multiples of that.</strong>
+          Send us a tape. We'll return recovery odds and projected cash flow on every claim — $500 flat, no commitment.
         </p>
 
         <div class="pilot-checklist">
           <div class="pilot-check-item">
-            <span class="tick" style="margin-top:0;">✓</span> <strong>Full Tape Scored in 24 hours</strong>
+            <span class="tick" style="margin-top:0;">✓</span> <strong>Recovery Odds on Every Claim</strong>
           </div>
           <div class="pilot-check-item">
-            <span class="tick" style="margin-top:0;">✓</span> <strong>Top 100 Discrepancy Report</strong>
+            <span class="tick" style="margin-top:0;">✓</span> <strong>Projected Cash Flow by Month</strong>
           </div>
           <div class="pilot-check-item">
-            <span class="tick" style="margin-top:0;">✓</span> <strong>Completion Odds per Claim</strong>
+            <span class="tick" style="margin-top:0;">✓</span> <strong>Top 100 Overpay Flags</strong>
           </div>
         </div>
 
@@ -1419,25 +714,12 @@
         Portfolio Valuation Lab
       </div>
       <p style="margin-top:0.5rem; font-size:0.8rem;">
-        © 2026. Institutional-grade underwriting outputs for Chapter 13 portfolios.
+        &copy; 2026. Institutional-grade underwriting outputs for Chapter 13 portfolios.
       </p>
     </div>
   </footer>
 
-  <script>
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-
-    menuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-
-    // Close menu when a link is clicked
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-      });
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="charts.js"></script>
 </body>
 </html>
