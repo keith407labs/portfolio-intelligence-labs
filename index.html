@@ -38,9 +38,9 @@
       </button>
 
       <div class="nav-links">
-        <a href="#data-proof">Data</a>
+        <a href="#industry-stats">Market</a>
         <a href="#how">How It Works</a>
-        <a href="#io">Data Structures</a>
+        <a href="#io">Deliverables</a>
         <a href="#calibration">Calibration</a>
         <a href="#pricing">Pricing</a>
         <a href="compliance.html">Compliance</a>
@@ -77,8 +77,55 @@
     </div>
   </div>
 
+  <!-- ═══════════ INDUSTRY STATS ═══════════ -->
+  <section id="industry-stats" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">The Market</div>
+        <h2>Chapter 13 Is a High-Risk, Low-Visibility Market</h2>
+        <p class="subtitle">
+          484,845 consumer bankruptcy cases were filed in 2024. The median debtor earns $4,060/month and spends $3,522 — leaving razor-thin plan funding. Here's what that means for your recovery odds.
+        </p>
+      </div>
+
+      <div class="grid-5 stagger-children">
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--red); font-family: 'JetBrains Mono', monospace;">51%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Dismissed for non-payment</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--amber); font-family: 'JetBrains Mono', monospace;">34%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Repeat filers (prior 8 yrs)</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--brand-glow); font-family: 'JetBrains Mono', monospace;">76%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Best district completion rate</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--red); font-family: 'JetBrains Mono', monospace;">&lt;40%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Worst district completion rate</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 1.25rem;">
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--check-green); font-family: 'JetBrains Mono', monospace;">24%</div>
+          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Plans modified before completion</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; border: 1px solid rgba(168,162,158,0.15); border-radius: 8px; padding: 1.25rem; background: rgba(28,25,23,0.4);">
+        <div style="font-size: 0.8rem; color: var(--brand-glow); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.7rem;">
+          2024 Debtor Financials
+        </div>
+        <div class="mono" style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;">
+          &bull; 484,845 consumer cases filed under Ch. 7, 11, and 13 — 452,970 debtors completed the required forms<br>
+          &bull; Median current monthly income: $4,060 (+7% from $3,809 in 2023) — median average monthly income: $3,734 (+6% YoY)<br>
+          &bull; Median average monthly expenses: $3,522 (+7% from 2023)<br>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════ DATA PROOF ═══════════ -->
-  <section id="data-proof" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
+  <section id="data-proof" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header fade-up">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Engine Output</div>
@@ -212,8 +259,29 @@
     </div>
   </section>
 
-  <!-- ═══════════ SENSITIVITY ═══════════ -->
-  <section id="sensitivity" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
+  <!-- ═══════════ RISK SIGNALS ═══════════ -->
+  <section id="risk-signals" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">What the Engine Finds</div>
+        <h2>What Moves the Odds on 1,937 Claims</h2>
+        <p class="subtitle">
+          Every claim is scanned for factors that raise or lower recovery odds. Here's what we flagged in a live portfolio.
+        </p>
+      </div>
+
+      <div class="chart-container full-width fade-up">
+        <h3>Factors That Move Recovery Odds</h3>
+        <div class="chart-subtitle">Red lowers your odds of getting paid — green raises them</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="riskSignalsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PRIORITY STACK ═══════════ -->
+  <section id="sensitivity" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header fade-up">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Priority Stack</div>
@@ -228,34 +296,11 @@
           <canvas id="waterfallChart"></canvas>
         </div>
       </div>
-
-      <div class="grid-5 stagger-children" style="margin-top: 2rem;">
-        <div class="card" style="text-align: center; padding: 1.25rem;">
-          <div style="font-size: 1.5rem; font-weight: 800; color: var(--red); font-family: 'JetBrains Mono', monospace;">51%</div>
-          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Dismissed for non-payment</p>
-        </div>
-        <div class="card" style="text-align: center; padding: 1.25rem;">
-          <div style="font-size: 1.5rem; font-weight: 800; color: var(--amber); font-family: 'JetBrains Mono', monospace;">34%</div>
-          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Repeat filers (prior 8 yrs)</p>
-        </div>
-        <div class="card" style="text-align: center; padding: 1.25rem;">
-          <div style="font-size: 1.5rem; font-weight: 800; color: var(--brand-glow); font-family: 'JetBrains Mono', monospace;">76%</div>
-          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Best district completion rate</p>
-        </div>
-        <div class="card" style="text-align: center; padding: 1.25rem;">
-          <div style="font-size: 1.5rem; font-weight: 800; color: var(--red); font-family: 'JetBrains Mono', monospace;">&lt;40%</div>
-          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Worst district completion rate</p>
-        </div>
-        <div class="card" style="text-align: center; padding: 1.25rem;">
-          <div style="font-size: 1.5rem; font-weight: 800; color: var(--check-green); font-family: 'JetBrains Mono', monospace;">24%</div>
-          <p style="font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted);">Plans modified before completion</p>
-        </div>
-      </div>
     </div>
   </section>
 
   <!-- ═══════════ HOW IT WORKS ═══════════ -->
-  <section id="how" style="border-top: 1px solid rgba(168,162,158,0.1);">
+  <section id="how" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
     <div class="container">
       <div class="section-header fade-up">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">How It Works</div>
@@ -299,29 +344,8 @@
     </div>
   </section>
 
-  <!-- ═══════════ RISK SIGNALS ═══════════ -->
-  <section id="risk-signals" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
-    <div class="container">
-      <div class="section-header fade-up">
-        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">What the Engine Finds</div>
-        <h2>What Moves the Odds on 1,937 Claims</h2>
-        <p class="subtitle">
-          Every claim is scanned for factors that raise or lower recovery odds. Here's what we flagged in a live portfolio.
-        </p>
-      </div>
-
-      <div class="chart-container full-width fade-up">
-        <h3>Factors That Move Recovery Odds</h3>
-        <div class="chart-subtitle">Red lowers your odds of getting paid — green raises them</div>
-        <div class="chart-canvas-wrap">
-          <canvas id="riskSignalsChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ I/O ═══════════ -->
-  <section id="io" class="fade-up">
+  <!-- ═══════════ I/O + SAMPLE OUTPUT ═══════════ -->
+  <section id="io" class="fade-up" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Data Pipeline</div>
@@ -392,21 +416,9 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══════════ SAMPLE OUTPUT ═══════════ -->
-  <section id="sample" class="fade-up">
-    <div class="container">
-      <div class="section-header">
-        <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Full Transparency</div>
-        <h2>Every Number Is Auditable</h2>
-        <p class="subtitle">
-          No black boxes. You get the raw trustee cash flow, the recovery projections, and the discrepancy flags — everything your IC needs to sign off.
-        </p>
-      </div>
-
-      <div class="sample-wrap">
+      <!-- Example Portfolio Summary -->
+      <div class="sample-wrap" style="margin-top: 3rem;">
         <div class="sample-head">
           <strong>Example Portfolio Summary</strong>
           <span class="pill">Downloadable Tables</span>
@@ -470,7 +482,7 @@
   </section>
 
   <!-- ═══════════ CALIBRATION ═══════════ -->
-  <section id="calibration" class="fade-up" style="border-top: 1px solid rgba(168,162,158,0.1);">
+  <section id="calibration" class="fade-up" style="border-top: 1px solid rgba(168,162,158,0.1); background: rgba(28,25,23,0.2);">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--violet); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Continuous Improvement</div>
@@ -529,7 +541,7 @@
   </section>
 
   <!-- ═══════════ PRICING (with merged matrix) ═══════════ -->
-  <section id="pricing" class="fade-up">
+  <section id="pricing" class="fade-up" style="border-top: 1px solid rgba(168,162,158,0.1);">
     <div class="container">
       <div class="section-header">
         <div class="mono" style="color:var(--brand-glow); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Volume-Based Pricing</div>
